@@ -7,8 +7,14 @@ import { fmt } from '../lib/format';
 import type { ReportOptions } from '../report/pdf';
 
 const OPTION_LABELS: Record<keyof ReportOptions, { label: string; description: string }> = {
-  appliances: { label: 'Load schedule', description: 'Every enabled appliance with its daily energy' },
-  cables: { label: 'Cables and protection', description: 'Conductor sizes, voltage drop, losses and fuses' },
+  appliances: {
+    label: 'Load schedule',
+    description: 'Every enabled appliance with its daily energy',
+  },
+  cables: {
+    label: 'Cables and protection',
+    description: 'Conductor sizes, voltage drop, losses and fuses',
+  },
   simulation: { label: 'Simulation', description: 'State-of-charge chart for the selected month' },
   assumptions: { label: 'Assumptions', description: 'Every engineering assumption used' },
   sources: { label: 'Sources', description: 'Datasheets and references, with verification status' },
@@ -17,7 +23,13 @@ const OPTION_LABELS: Record<keyof ReportOptions, { label: string; description: s
 export function ReportPage() {
   const design = useActiveDesign();
   const a = useAnalysis();
-  const [opts, setOpts] = useState<ReportOptions>({ appliances: true, cables: true, simulation: true, assumptions: true, sources: true });
+  const [opts, setOpts] = useState<ReportOptions>({
+    appliances: true,
+    cables: true,
+    simulation: true,
+    assumptions: true,
+    sources: true,
+  });
   const [busy, setBusy] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -68,7 +80,8 @@ export function ReportPage() {
               {busy ? <Loader2 size={15} className="animate-spin" /> : <Eye size={15} />} Preview
             </button>
             <button className="btn btn-primary" onClick={download} disabled={busy}>
-              {busy ? <Loader2 size={15} className="animate-spin" /> : <Download size={15} />} Download PDF
+              {busy ? <Loader2 size={15} className="animate-spin" /> : <Download size={15} />}{' '}
+              Download PDF
             </button>
           </>
         }
@@ -77,7 +90,9 @@ export function ReportPage() {
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
         <Card title="Report contents">
           <div className="space-y-3">
-            <p className="text-sm text-ink2">Always included: summary, design checks, battery, solar, charging and inverter.</p>
+            <p className="text-sm text-ink2">
+              Always included: summary, design checks, battery, solar, charging and inverter.
+            </p>
             {(Object.keys(OPTION_LABELS) as (keyof ReportOptions)[]).map((k) => (
               <Toggle
                 key={k}
@@ -89,7 +104,11 @@ export function ReportPage() {
             ))}
           </div>
         </Card>
-        <Card className="xl:col-span-2" title={design.name} actions={<StatusPill status={a.status} />}>
+        <Card
+          className="xl:col-span-2"
+          title={design.name}
+          actions={<StatusPill status={a.status} />}
+        >
           <dl className="num grid grid-cols-2 gap-x-6 gap-y-2 text-sm sm:grid-cols-3">
             <div>
               <dt className="text-xs text-ink3">Daily consumption</dt>
@@ -101,7 +120,10 @@ export function ReportPage() {
             </div>
             <div>
               <dt className="text-xs text-ink3">Autonomy</dt>
-              <dd className="font-medium">{Number.isFinite(a.summary.autonomyDays) ? fmt(a.summary.autonomyDays, 1) : '∞'} days</dd>
+              <dd className="font-medium">
+                {Number.isFinite(a.summary.autonomyDays) ? fmt(a.summary.autonomyDays, 1) : '∞'}{' '}
+                days
+              </dd>
             </div>
             <div>
               <dt className="text-xs text-ink3">Solar</dt>
@@ -123,7 +145,11 @@ export function ReportPage() {
           )}
           <div className="mt-4">
             {previewUrl ? (
-              <iframe title="PDF preview" src={previewUrl} className="h-[70vh] w-full rounded-lg border border-line bg-white" />
+              <iframe
+                title="PDF preview"
+                src={previewUrl}
+                className="h-[70vh] w-full rounded-lg border border-line bg-white"
+              />
             ) : (
               <div className="flex h-48 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-line text-sm text-ink3">
                 <FileText size={28} />

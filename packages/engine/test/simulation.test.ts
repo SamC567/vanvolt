@@ -56,9 +56,20 @@ describe('profiles and masks', () => {
 function inputs(over: Partial<SimulationInputs> = {}): SimulationInputs {
   return {
     appliances: [appliance({ powerW: 50, hoursPerDay: 24 })], // 1200 Wh/day
-    inverterEfficiencyPct: 100, inverterIdleW: 0, inverterOnHoursPerDay: 0, hasAcLoads: false,
-    solarWhPerDay: 0, latitude: 50, month: 6, days: 2, startSocPct: 100,
-    nominalWh: 2000, dodPct: 80, chargeEfficiencyPct: 100, maxChargeW: 1000, taperStartSoc: 0.95,
+    inverterEfficiencyPct: 100,
+    inverterIdleW: 0,
+    inverterOnHoursPerDay: 0,
+    hasAcLoads: false,
+    solarWhPerDay: 0,
+    latitude: 50,
+    month: 6,
+    days: 2,
+    startSocPct: 100,
+    nominalWh: 2000,
+    dodPct: 80,
+    chargeEfficiencyPct: 100,
+    maxChargeW: 1000,
+    taperStartSoc: 0.95,
     alternator: { enabled: false, powerW: 0, hoursPerDay: 0, daysPerWeek: 0, startHour: 10 },
     shore: { enabled: false, powerW: 0, hoursPerDay: 0, daysPerWeek: 0, startHour: 18 },
     ...over,
@@ -79,7 +90,10 @@ describe('simulate', () => {
     const startWh = 1000;
     const endWh = (r.endSocPct / 100) * 2000;
     const solarTotal = r.steps.reduce((t, s) => t + s.solarW, 0);
-    expect(endWh - startWh).toBeCloseTo(solarTotal - r.totalLoadWh + r.totalUnmetWh - r.totalCurtailedWh, 6);
+    expect(endWh - startWh).toBeCloseTo(
+      solarTotal - r.totalLoadWh + r.totalUnmetWh - r.totalCurtailedWh,
+      6,
+    );
   });
   it('curtails solar when the battery is full', () => {
     const r = simulate(inputs({ appliances: [], solarWhPerDay: 1000, startSocPct: 100 }));
@@ -89,7 +103,10 @@ describe('simulate', () => {
   it('applies charge efficiency and alternator windows', () => {
     const r = simulate(
       inputs({
-        appliances: [], startSocPct: 20, days: 1, chargeEfficiencyPct: 90,
+        appliances: [],
+        startSocPct: 20,
+        days: 1,
+        chargeEfficiencyPct: 90,
         alternator: { enabled: true, powerW: 400, hoursPerDay: 1, daysPerWeek: 7, startHour: 10 },
       }),
     );

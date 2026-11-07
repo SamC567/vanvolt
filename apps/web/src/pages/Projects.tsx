@@ -12,7 +12,13 @@ export function downloadJson(design: Design) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `${design.name.replace(/[^\w\- ]+/g, '').trim().replace(/\s+/g, '-').toLowerCase() || 'design'}.vanvolt.json`;
+  a.download = `${
+    design.name
+      .replace(/[^\w\- ]+/g, '')
+      .trim()
+      .replace(/\s+/g, '-')
+      .toLowerCase() || 'design'
+  }.vanvolt.json`;
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
@@ -57,7 +63,9 @@ function DesignCard({ d }: { d: Design }) {
         </div>
         <div>
           <dt className="text-ink3">Autonomy</dt>
-          <dd className="font-medium">{Number.isFinite(a.summary.autonomyDays) ? fmt(a.summary.autonomyDays, 1) : '∞'} d</dd>
+          <dd className="font-medium">
+            {Number.isFinite(a.summary.autonomyDays) ? fmt(a.summary.autonomyDays, 1) : '∞'} d
+          </dd>
         </div>
         <div>
           <dt className="text-ink3">Inverter</dt>
@@ -84,17 +92,37 @@ function DesignCard({ d }: { d: Design }) {
         >
           <Pencil size={13} />
         </button>
-        <button className="btn text-xs" onClick={() => duplicate(d.id)} aria-label={`Duplicate ${d.name}`} title="Duplicate">
+        <button
+          className="btn text-xs"
+          onClick={() => duplicate(d.id)}
+          aria-label={`Duplicate ${d.name}`}
+          title="Duplicate"
+        >
           <Copy size={13} />
         </button>
-        <button className="btn text-xs" onClick={() => downloadJson(d)} aria-label={`Export ${d.name}`} title="Export JSON">
+        <button
+          className="btn text-xs"
+          onClick={() => downloadJson(d)}
+          aria-label={`Export ${d.name}`}
+          title="Export JSON"
+        >
           <Download size={13} />
         </button>
         <label className="btn cursor-pointer text-xs" title="Include in comparison">
-          <input type="checkbox" checked={compareIds.includes(d.id)} onChange={() => toggleCompare(d.id)} className="accent-[var(--accent)]" />
+          <input
+            type="checkbox"
+            checked={compareIds.includes(d.id)}
+            onChange={() => toggleCompare(d.id)}
+            className="accent-[var(--accent)]"
+          />
           Compare
         </label>
-        <button className="btn ml-auto text-xs text-crit" onClick={() => setConfirm(true)} aria-label={`Delete ${d.name}`} title="Delete">
+        <button
+          className="btn ml-auto text-xs text-crit"
+          onClick={() => setConfirm(true)}
+          aria-label={`Delete ${d.name}`}
+          title="Delete"
+        >
           <Trash2 size={13} />
         </button>
       </div>
@@ -138,7 +166,11 @@ export function ProjectsPage() {
       importDesign(json);
       navigate('overview');
     } catch (e) {
-      setError(e instanceof DesignImportError ? e.message : 'Could not read that file — is it a VanVolt .json export?');
+      setError(
+        e instanceof DesignImportError
+          ? e.message
+          : 'Could not read that file — is it a VanVolt .json export?',
+      );
     } finally {
       if (fileRef.current) fileRef.current.value = '';
     }
@@ -166,7 +198,14 @@ export function ProjectsPage() {
           </>
         }
       />
-      <input ref={fileRef} type="file" accept="application/json,.json" className="hidden" onChange={(e) => onFile(e.target.files?.[0])} aria-label="Import design file" />
+      <input
+        ref={fileRef}
+        type="file"
+        accept="application/json,.json"
+        className="hidden"
+        onChange={(e) => onFile(e.target.files?.[0])}
+        aria-label="Import design file"
+      />
       {error && (
         <div className="mb-4">
           <Callout tone="warn">{error}</Callout>
@@ -177,7 +216,11 @@ export function ProjectsPage() {
         {order.map((id) => designs[id] && <DesignCard key={id} d={designs[id]!} />)}
       </div>
 
-      <Card className="mt-6" title="Example designs" subtitle="Load a worked example as a new project">
+      <Card
+        className="mt-6"
+        title="Example designs"
+        subtitle="Load a worked example as a new project"
+      >
         <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
           {EXAMPLE_DESIGNS.map((e) => {
             const d = e.build();

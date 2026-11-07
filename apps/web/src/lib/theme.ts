@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { useStore } from '../store/designStore';
 
 function systemDark() {
-  return typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+  return (
+    typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches
+  );
 }
 
 /** Applies the theme preference to <html> and returns whether dark mode is active. */

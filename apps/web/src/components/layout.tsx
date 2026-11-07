@@ -61,7 +61,9 @@ function NavList({ route, onNavigate }: { route: Route; onNavigate?: () => void 
     <nav className="flex flex-col gap-4" aria-label="Main">
       {groups.map((g) => (
         <div key={g}>
-          <p className="mb-1 px-3 text-[11px] font-semibold uppercase tracking-wider text-ink3">{g}</p>
+          <p className="mb-1 px-3 text-[11px] font-semibold uppercase tracking-wider text-ink3">
+            {g}
+          </p>
           <ul className="flex flex-col gap-0.5">
             {NAV.filter((n) => n.group === g).map((n) => {
               const Icon = n.icon;
@@ -74,7 +76,9 @@ function NavList({ route, onNavigate }: { route: Route; onNavigate?: () => void 
                     aria-current={active ? 'page' : undefined}
                     className={clsx(
                       'flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-sm transition',
-                      active ? 'bg-accent-soft font-medium text-accent' : 'text-ink2 hover:bg-surface2 hover:text-ink',
+                      active
+                        ? 'bg-accent-soft font-medium text-accent'
+                        : 'text-ink2 hover:bg-surface2 hover:text-ink',
                     )}
                   >
                     <Icon size={16} />
@@ -135,10 +139,22 @@ function UndoRedo() {
   const canRedo = useStore((s) => (s.history[s.activeId]?.future.length ?? 0) > 0);
   return (
     <div className="hidden items-center sm:flex">
-      <button className="btn btn-ghost px-2" onClick={undo} disabled={!canUndo} aria-label="Undo" title="Undo (Ctrl+Z)">
+      <button
+        className="btn btn-ghost px-2"
+        onClick={undo}
+        disabled={!canUndo}
+        aria-label="Undo"
+        title="Undo (Ctrl+Z)"
+      >
         <Undo2 size={16} />
       </button>
-      <button className="btn btn-ghost px-2" onClick={redo} disabled={!canRedo} aria-label="Redo" title="Redo (Ctrl+Shift+Z)">
+      <button
+        className="btn btn-ghost px-2"
+        onClick={redo}
+        disabled={!canRedo}
+        aria-label="Redo"
+        title="Redo (Ctrl+Shift+Z)"
+      >
         <Redo2 size={16} />
       </button>
     </div>
@@ -166,7 +182,11 @@ export function Shell({ route, children }: { route: Route; children: ReactNode }
           >
             <div className="flex items-center justify-between">
               <Brand />
-              <button className="btn btn-ghost px-2" onClick={() => setOpen(false)} aria-label="Close menu">
+              <button
+                className="btn btn-ghost px-2"
+                onClick={() => setOpen(false)}
+                aria-label="Close menu"
+              >
                 <X size={18} />
               </button>
             </div>
@@ -177,7 +197,11 @@ export function Shell({ route, children }: { route: Route; children: ReactNode }
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-30 flex items-center gap-2 border-b border-line bg-surface/85 px-3 py-2 backdrop-blur sm:px-5">
-          <button className="btn btn-ghost px-2 lg:hidden" onClick={() => setOpen(true)} aria-label="Open menu">
+          <button
+            className="btn btn-ghost px-2 lg:hidden"
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
+          >
             <Menu size={18} />
           </button>
           <ProjectSwitcher />
@@ -196,7 +220,9 @@ export function Shell({ route, children }: { route: Route; children: ReactNode }
             </a>
           </div>
         </header>
-        <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 py-5 sm:px-6 sm:py-6">{children}</main>
+        <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 py-5 sm:px-6 sm:py-6">
+          {children}
+        </main>
       </div>
     </div>
   );

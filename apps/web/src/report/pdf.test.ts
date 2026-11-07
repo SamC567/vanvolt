@@ -10,16 +10,21 @@ describe('pdfText', () => {
 });
 
 describe('buildReport', () => {
-  it.each(EXAMPLE_DESIGNS.map((e) => [e.id, e.build] as const))('generates a multi-page PDF for %s', (_, build) => {
-    const d = build();
-    const doc = buildReport(d, analyseDesign(d));
-    expect(doc.getNumberOfPages()).toBeGreaterThan(2);
-    const out = doc.output('arraybuffer');
-    const head = new TextDecoder().decode(new Uint8Array(out).slice(0, 5));
-    expect(head).toBe('%PDF-');
-  });
+  it.each(EXAMPLE_DESIGNS.map((e) => [e.id, e.build] as const))(
+    'generates a multi-page PDF for %s',
+    (_, build) => {
+      const d = build();
+      const doc = buildReport(d, analyseDesign(d));
+      expect(doc.getNumberOfPages()).toBeGreaterThan(2);
+      const out = doc.output('arraybuffer');
+      const head = new TextDecoder().decode(new Uint8Array(out).slice(0, 5));
+      expect(head).toBe('%PDF-');
+    },
+  );
   it('makes a safe file name', () => {
     const d = EXAMPLE_DESIGNS[0]!.build();
-    expect(reportFileName({ ...d, name: 'My van / 2026!' })).toMatch(/^vanvolt-my-van-2026-\d{4}-\d{2}-\d{2}\.pdf$/);
+    expect(reportFileName({ ...d, name: 'My van / 2026!' })).toMatch(
+      /^vanvolt-my-van-2026-\d{4}-\d{2}-\d{2}\.pdf$/,
+    );
   });
 });

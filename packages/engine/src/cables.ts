@@ -167,7 +167,11 @@ export interface FuseOptions {
 }
 
 /** Fuse families suitable for a circuit voltage and position. */
-export function eligibleFuseFamilies(tables: CableTables, circuitVoltage: number, opts: FuseOptions = {}): FuseFamily[] {
+export function eligibleFuseFamilies(
+  tables: CableTables,
+  circuitVoltage: number,
+  opts: FuseOptions = {},
+): FuseFamily[] {
   return tables.fuses.filter(
     (f) =>
       f.maxVoltageDc >= circuitVoltage * MAX_CHARGE_VOLTAGE_FACTOR - 1e-9 &&
@@ -236,12 +240,19 @@ export function recommendFuse(
   const ok = ratingA !== null && ratingA <= cableAmpacityA + 1e-9;
   const notes: string[] = [];
   if (sel.noEligibleFamily)
-    notes.push(`No fuse family in the VanVolt library is rated for this position at ≥ ${Math.ceil(circuitVoltage * MAX_CHARGE_VOLTAGE_FACTOR)} V DC — choose one whose DC voltage and interrupt ratings suit the circuit.`);
-  if (ratingA === null) notes.push('Current is above the largest fuse in the library; specialist protection needed.');
+    notes.push(
+      `No fuse family in the VanVolt library is rated for this position at ≥ ${Math.ceil(circuitVoltage * MAX_CHARGE_VOLTAGE_FACTOR)} V DC — choose one whose DC voltage and interrupt ratings suit the circuit.`,
+    );
+  if (ratingA === null)
+    notes.push('Current is above the largest fuse in the library; specialist protection needed.');
   if (ratingA !== null && !ok)
-    notes.push(`A ${ratingA} A fuse would not protect a cable rated ${Math.floor(cableAmpacityA)} A — increase the conductor size.`);
+    notes.push(
+      `A ${ratingA} A fuse would not protect a cable rated ${Math.floor(cableAmpacityA)} A — increase the conductor size.`,
+    );
   if (opts.mainBattery && opts.lithium)
-    notes.push('Lithium banks can deliver very high short-circuit currents: use a main fuse with a high interrupt rating (e.g. Class T) close to the battery positive terminal.');
+    notes.push(
+      'Lithium banks can deliver very high short-circuit currents: use a main fuse with a high interrupt rating (e.g. Class T) close to the battery positive terminal.',
+    );
   if (opts.mainBattery && !opts.lithium)
     notes.push('Fit the main fuse as close as practical to the battery positive terminal.');
   return { minRatingA, maxRatingA: cableAmpacityA, ratingA, ok, families: sel.families, notes };
@@ -285,10 +296,18 @@ export function sizeCable(
   // The cable must carry the fuse rating (or, for PV circuits, the design current).
   const fuseRating = opts.pv
     ? current
-    : (selectFuseRating(tables, current, input.voltageV, opts).ratingA ?? current * FUSE_CONTINUOUS_FACTOR);
+    : (selectFuseRating(tables, current, input.voltageV, opts).ratingA ??
+      current * FUSE_CONTINUOUS_FACTOR);
 
   const evaluate = (c: ConductorSpec) => {
-    const amp = deratedAmpacity(tables, table, c.csaMm2, input.installation, input.bundledCount, input.ambientC);
+    const amp = deratedAmpacity(
+      tables,
+      table,
+      c.csaMm2,
+      input.installation,
+      input.bundledCount,
+      input.ambientC,
+    );
     const dropV = voltageDrop(current, length, c.resistanceOhmPerKm, opts.conductorTempC);
     return { c, amp, dropV };
   };
@@ -312,18 +331,30 @@ export function sizeCable(
           : 'ampacity';
       // If the drop-limited size already satisfied ampacity it is drop-limited, otherwise ampacity-limited.
       const smallestAmpOk = candidates.find((x) => x.amp !== null && x.amp >= fuseRating - 1e-9);
-      if (smallestAmpOk && smallestAmpOk.c.csaMm2 === chosen.c.csaMm2 && !(firstDropOk && firstDropOk.c.csaMm2 === chosen.c.csaMm2)) {
+      if (
+        smallestAmpOk &&
+        smallestAmpOk.c.csaMm2 === chosen.c.csaMm2 &&
+        !(firstDropOk && firstDropOk.c.csaMm2 === chosen.c.csaMm2)
+      ) {
         limitedBy = 'ampacity';
       }
     }
   }
 
-  const minimumCsaForDropMm2 = minimumCsaForDrop(current, length, input.voltageV, input.maxDropPct, opts.conductorTempC);
+  const minimumCsaForDropMm2 = minimumCsaForDrop(
+    current,
+    length,
+    input.voltageV,
+    input.maxDropPct,
+    opts.conductorTempC,
+  );
   const messages: string[] = [];
 
   if (!chosen) {
     const fuse = recommendFuse(tables, current, 0, input.voltageV, opts);
-    messages.push('No standard conductor size in the table satisfies both voltage drop and current capacity. Shorten the run, raise the system voltage or use parallel conductors.');
+    messages.push(
+      'No standard conductor size in the table satisfies both voltage drop and current capacity. Shorten the run, raise the system voltage or use parallel conductors.',
+    );
     return {
       input,
       selectedCsaMm2: null,
@@ -345,9 +376,13 @@ export function sizeCable(
   let ok = fuse.ok && chosen.dropV <= dropLimitV + 1e-9;
   if (limitedBy === 'override') {
     if (chosen.dropV > dropLimitV + 1e-9)
-      messages.push(`Voltage drop ${dropPct.toFixed(1)}% exceeds the ${input.maxDropPct}% limit for this circuit.`);
+      messages.push(
+        `Voltage drop ${dropPct.toFixed(1)}% exceeds the ${input.maxDropPct}% limit for this circuit.`,
+      );
     if (ampacityA !== null && ampacityA < current) {
-      messages.push(`Design current ${current.toFixed(1)} A exceeds the cable's derated capacity of ${ampacityA.toFixed(0)} A — overheating risk.`);
+      messages.push(
+        `Design current ${current.toFixed(1)} A exceeds the cable's derated capacity of ${ampacityA.toFixed(0)} A — overheating risk.`,
+      );
       ok = false;
     }
   }

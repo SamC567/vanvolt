@@ -198,8 +198,7 @@ export function analyseSolar(
   }));
   const sorted = [...monthly].sort((a, b) => a.whPerDay - b.whPerDay);
   const { summer, winter } = seasonMonths(location.lat);
-  const avgOf = (months: number[]) =>
-    mean(months.map((m) => monthly[m - 1]?.whPerDay ?? 0));
+  const avgOf = (months: number[]) => mean(months.map((m) => monthly[m - 1]?.whPerDay ?? 0));
   const worst = sorted[0] ?? { month: 1, psh: 0, whPerDay: 0 };
   const best = sorted[sorted.length - 1] ?? worst;
   const perW = (m: MonthlySolar) => m.psh * losses.overall;

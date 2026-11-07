@@ -15,18 +15,18 @@ systems. Priorities, in order:
 
 ## Technology stack
 
-| Concern | Choice | Why |
-| --- | --- | --- |
-| Language | TypeScript 5.9 (strict, `noUncheckedIndexedAccess`) | Type safety across engine and UI |
-| Monorepo | npm workspaces | No extra tooling for users to install |
-| Engine | Plain TS, zero runtime deps (`packages/engine`) | Testable, portable, UI-independent |
-| Tests | Vitest | Fast, TS-native |
-| UI | React 19 + Vite 7 (`apps/web`) | Mature ecosystem, fast dev server |
-| Styling | Tailwind CSS 3 + CSS variables | Consistent design tokens, dark/light themes |
-| Charts | Recharts 3 | Declarative, interactive SVG charts |
-| Diagram | React Flow (`@xyflow/react`) | Drag-and-drop node graph with custom nodes/edges |
-| State | Zustand + `persist` (localStorage) | Small, typed, built-in persistence |
-| PDF | jsPDF + jspdf-autotable | Client-side vector PDF reports, no server |
+| Concern  | Choice                                              | Why                                              |
+| -------- | --------------------------------------------------- | ------------------------------------------------ |
+| Language | TypeScript 5.9 (strict, `noUncheckedIndexedAccess`) | Type safety across engine and UI                 |
+| Monorepo | npm workspaces                                      | No extra tooling for users to install            |
+| Engine   | Plain TS, zero runtime deps (`packages/engine`)     | Testable, portable, UI-independent               |
+| Tests    | Vitest                                              | Fast, TS-native                                  |
+| UI       | React 19 + Vite 7 (`apps/web`)                      | Mature ecosystem, fast dev server                |
+| Styling  | Tailwind CSS 3 + CSS variables                      | Consistent design tokens, dark/light themes      |
+| Charts   | Recharts 3                                          | Declarative, interactive SVG charts              |
+| Diagram  | React Flow (`@xyflow/react`)                        | Drag-and-drop node graph with custom nodes/edges |
+| State    | Zustand + `persist` (localStorage)                  | Small, typed, built-in persistence               |
+| PDF      | jsPDF + jspdf-autotable                             | Client-side vector PDF reports, no server        |
 
 ## Repository layout
 
@@ -84,13 +84,13 @@ that the UI and PDF report display verbatim.
 
 ## Implementation milestones
 
-| # | Milestone | Done when |
-| --- | --- | --- |
-| M0 | Scaffold, tooling, docs skeleton | `npm install` works; first commit pushed |
-| M1 | Calculation engine and unit tests | All engine modules implemented; tests green |
-| M2 | Researched reference data | Component library, appliances, irradiance, cable tables with source links |
-| M3 | Web UI core | Shell, themes, persistence, projects, all designer pages live |
-| M4 | Diagram, comparison, PDF, examples | Interactive diagram, compare view, PDF export, example designs |
-| M5 | Verification and docs | Browser checks, code review, final docs |
+| #   | Milestone                          | Done when                                                                 |
+| --- | ---------------------------------- | ------------------------------------------------------------------------- |
+| M0  | Scaffold, tooling, docs skeleton   | `npm install` works; first commit pushed                                  |
+| M1  | Calculation engine and unit tests  | All engine modules implemented; tests green                               |
+| M2  | Researched reference data          | Component library, appliances, irradiance, cable tables with source links |
+| M3  | Web UI core                        | Shell, themes, persistence, projects, all designer pages live             |
+| M4  | Diagram, comparison, PDF, examples | Interactive diagram, compare view, PDF export, example designs            |
+| M5  | Verification and docs              | Browser checks, code review, final docs                                   |
 
 Each milestone: run tests → fix → verify UI → update docs → commit → push.

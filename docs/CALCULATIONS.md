@@ -4,7 +4,7 @@ Every formula used by the engine (`packages/engine/src`). Symbols: P power (W), 
 V voltage (V), I current (A), η efficiency (fraction), L one-way cable length (m).
 
 All results are **estimates** for planning. They depend on the stated assumptions, which are
-listed in the app under *Assumptions* and in the PDF report.
+listed in the app under _Assumptions_ and in the PDF report.
 
 ## 1. Consumption (`consumption.ts`)
 
@@ -26,8 +26,8 @@ Battery Wh/day = E_dc + E_ac/η + P_idle × h_on
 Ah/day         = Wh/day ÷ V_bank_nominal
 ```
 
-**Continuous vs peak demand.** Loads marked *concurrent* can all run together. Loads marked
-*exclusive* (e.g. kettle, hair dryer) are never used at the same time as each other, but can run
+**Continuous vs peak demand.** Loads marked _concurrent_ can all run together. Loads marked
+_exclusive_ (e.g. kettle, hair dryer) are never used at the same time as each other, but can run
 alongside the concurrent set.
 
 ```
@@ -89,6 +89,7 @@ DC input current    = P_ac / (V_min × η)
 ```
 
 Per-load checks:
+
 - **Incompatible** if running power exceeds the inverter's continuous rating, if the surge
   exceeds its peak rating, if no inverter is enabled, or if the load's DC current exceeds the
   battery's continuous discharge limit.
@@ -119,6 +120,7 @@ Loss   = I × V_drop
 ```
 
 Conductor selection is the smallest standard size that:
+
 1. keeps `V_drop ≤ limit` (battery, inverter and charger output circuits 2.5 %; battery → busbar
    1 %; PV 3 %; DC-DC input 5 %), and
 2. has a derated ampacity ≥ the protecting fuse rating.
@@ -129,6 +131,7 @@ Above 30 °C it is interpolated linearly to the ISO 60 °C factor (×0.75 at 70 
 conductors ×0.70, 4–6 ×0.60, 7–24 ×0.50, 25+ ×0.40.
 
 Fuse rating:
+
 - The smallest rating ≥ 1.25 × design current that a suitable family offers.
 - The family's DC voltage rating must be ≥ 1.2 × nominal.
 - Lithium main fuses must come from high-interrupt families (Class T, MRBF).

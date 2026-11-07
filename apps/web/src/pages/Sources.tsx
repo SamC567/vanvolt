@@ -16,11 +16,26 @@ import {
   GROUPING_SOURCE,
   type Provenance,
 } from '@vanvolt/engine';
-import { Callout, Card, PageHeader, PROVENANCE_META, ProvenanceBadge, SourceLink } from '../components/ui';
+import {
+  Callout,
+  Card,
+  PageHeader,
+  PROVENANCE_META,
+  ProvenanceBadge,
+  SourceLink,
+} from '../components/ui';
 import { useAnalysis } from '../lib/useAnalysis';
 import { fmt } from '../lib/format';
 
-type Tab = 'assumptions' | 'batteries' | 'inverters' | 'solar' | 'chargers' | 'appliances' | 'irradiance' | 'cables';
+type Tab =
+  | 'assumptions'
+  | 'batteries'
+  | 'inverters'
+  | 'solar'
+  | 'chargers'
+  | 'appliances'
+  | 'irradiance'
+  | 'cables';
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'assumptions', label: 'Assumptions' },
@@ -48,7 +63,10 @@ function Table({ head, rows }: { head: string[]; rows: ReactNode[][] }) {
           {rows.map((r, i) => (
             <tr key={i}>
               {r.map((c, j) => (
-                <td key={j} className={j > 0 && typeof c === 'string' && /^[\d.,–\- ]+/.test(c) ? 'num' : ''}>
+                <td
+                  key={j}
+                  className={j > 0 && typeof c === 'string' && /^[\d.,–\- ]+/.test(c) ? 'num' : ''}
+                >
                   {c}
                 </td>
               ))}
@@ -81,9 +99,10 @@ export function SourcesPage() {
           ))}
         </div>
         <p className="mt-3 text-xs text-ink2">
-          Source links marked <b>verified</b> were checked against the cited document. Links marked <b>secondary — verify</b> (and
-          badges with *) were reported from the source but could not be opened for checking, usually because the
-          manufacturer site blocks automated access. Check those values on the datasheet before buying or installing.
+          Source links marked <b>verified</b> were checked against the cited document. Links marked{' '}
+          <b>secondary — verify</b> (and badges with *) were reported from the source but could not
+          be opened for checking, usually because the manufacturer site blocks automated access.
+          Check those values on the datasheet before buying or installing.
         </p>
       </Card>
 
@@ -116,8 +135,20 @@ export function SourcesPage() {
           <div className="p-4">
             <p className="mb-2 text-sm font-medium">Battery chemistry parameters</p>
             <Table
-              head={['Chemistry', 'Default DoD', 'Round-trip efficiency', 'Peukert', 'Min. voltage / 12 V block']}
-              rows={Object.values(CHEMISTRIES).map((c) => [c.label, `${c.defaultDodPct}%`, `${c.chargeEfficiencyPct}%`, c.peukertExponent.toFixed(2), `${c.minVoltagePer12V} V`])}
+              head={[
+                'Chemistry',
+                'Default DoD',
+                'Round-trip efficiency',
+                'Peukert',
+                'Min. voltage / 12 V block',
+              ]}
+              rows={Object.values(CHEMISTRIES).map((c) => [
+                c.label,
+                `${c.defaultDodPct}%`,
+                `${c.chargeEfficiencyPct}%`,
+                c.peukertExponent.toFixed(2),
+                `${c.minVoltagePer12V} V`,
+              ])}
             />
             <div className="mt-2 flex flex-col gap-1">
               {CHEMISTRIES.agm.sources.concat(CHEMISTRIES.lifepo4.sources.slice(1, 2)).map((s) => (
@@ -131,9 +162,20 @@ export function SourcesPage() {
       {tab === 'batteries' && (
         <Card bodyClassName="p-0">
           <Table
-            head={['Battery', 'Chemistry', 'V', 'Ah', 'Max discharge', 'Max charge', 'Weight', 'Source']}
+            head={[
+              'Battery',
+              'Chemistry',
+              'V',
+              'Ah',
+              'Max discharge',
+              'Max charge',
+              'Weight',
+              'Source',
+            ]}
             rows={BATTERY_MODULES.map((m) => [
-              <span className="font-medium">{m.manufacturer} {m.model}</span>,
+              <span className="font-medium">
+                {m.manufacturer} {m.model}
+              </span>,
               m.chemistry.toUpperCase(),
               fmt(m.nominalVoltage, 1),
               fmt(m.capacityAh),
@@ -149,9 +191,21 @@ export function SourcesPage() {
       {tab === 'inverters' && (
         <Card bodyClassName="p-0">
           <Table
-            head={['Inverter', 'Input', 'Cont. 25 °C', 'Cont. 40 °C', 'Peak', 'Max eff.', 'Idle', 'Charger', 'Source']}
+            head={[
+              'Inverter',
+              'Input',
+              'Cont. 25 °C',
+              'Cont. 40 °C',
+              'Peak',
+              'Max eff.',
+              'Idle',
+              'Charger',
+              'Source',
+            ]}
             rows={INVERTER_MODELS.map((m) => [
-              <span className="font-medium">{m.manufacturer} {m.model}</span>,
+              <span className="font-medium">
+                {m.manufacturer} {m.model}
+              </span>,
               `${m.inputVoltage} V`,
               `${m.continuousW} W`,
               m.continuousW40C ? `${m.continuousW40C} W` : '—',
@@ -171,7 +225,9 @@ export function SourcesPage() {
             <Table
               head={['Panel', 'Pmax', 'Vmp', 'Imp', 'Voc', 'Isc', 'γ Pmax', 'Weight', 'Source']}
               rows={SOLAR_PANELS.map((p) => [
-                <span className="font-medium">{p.manufacturer} {p.model}</span>,
+                <span className="font-medium">
+                  {p.manufacturer} {p.model}
+                </span>,
                 `${p.powerW} W`,
                 `${p.vmpV} V`,
                 `${p.impA} A`,
@@ -185,9 +241,18 @@ export function SourcesPage() {
           </Card>
           <Card title="MPPT charge controllers" bodyClassName="p-0">
             <Table
-              head={['Controller', 'Max PV V', 'Max charge', 'PV power 12/24/48 V', 'Max eff.', 'Source']}
+              head={[
+                'Controller',
+                'Max PV V',
+                'Max charge',
+                'PV power 12/24/48 V',
+                'Max eff.',
+                'Source',
+              ]}
               rows={MPPT_CONTROLLERS.map((m) => [
-                <span className="font-medium">{m.manufacturer} {m.model}</span>,
+                <span className="font-medium">
+                  {m.manufacturer} {m.model}
+                </span>,
                 `${m.maxPvVoltageV} V`,
                 `${m.maxChargeCurrentA} A`,
                 [12, 24, 48].map((v) => m.maxPvPowerW?.[v as 12] ?? '—').join(' / ') + ' W',
@@ -204,13 +269,27 @@ export function SourcesPage() {
           <Card title="DC-DC chargers" bodyClassName="p-0">
             <Table
               head={['Charger', 'Output', 'Efficiency', 'Source']}
-              rows={DCDC_CHARGERS.map((c) => [<span className="font-medium">{c.manufacturer} {c.model}</span>, `${c.outputCurrentA} A`, `${c.efficiencyPct}%`, <SourceLink source={c.source} compact />])}
+              rows={DCDC_CHARGERS.map((c) => [
+                <span className="font-medium">
+                  {c.manufacturer} {c.model}
+                </span>,
+                `${c.outputCurrentA} A`,
+                `${c.efficiencyPct}%`,
+                <SourceLink source={c.source} compact />,
+              ])}
             />
           </Card>
           <Card title="Shore (AC) chargers" bodyClassName="p-0">
             <Table
               head={['Charger', 'Output', 'Efficiency', 'Source']}
-              rows={AC_CHARGERS.map((c) => [<span className="font-medium">{c.manufacturer} {c.model}</span>, `${c.outputCurrentA} A`, `${c.efficiencyPct}%`, <SourceLink source={c.source} compact />])}
+              rows={AC_CHARGERS.map((c) => [
+                <span className="font-medium">
+                  {c.manufacturer} {c.model}
+                </span>,
+                `${c.outputCurrentA} A`,
+                `${c.efficiencyPct}%`,
+                <SourceLink source={c.source} compact />,
+              ])}
             />
           </Card>
         </div>
@@ -226,18 +305,28 @@ export function SourcesPage() {
               `${fmt(p.powerW, p.powerW < 100 ? 1 : 0)} W`,
               `${fmt(p.surgeW)} W`,
               <ProvenanceBadge provenance={p.provenance} source={p.source} />,
-              p.source ? <SourceLink source={p.source} compact /> : <span className="text-xs text-ink3">{p.notes}</span>,
+              p.source ? (
+                <SourceLink source={p.source} compact />
+              ) : (
+                <span className="text-xs text-ink3">{p.notes}</span>
+              ),
             ])}
           />
         </Card>
       )}
 
       {tab === 'irradiance' && (
-        <Card title="Monthly average daily irradiation, flat panels (kWh/m²/day)" subtitle="PVGIS 5.3 — European Commission Joint Research Centre" bodyClassName="p-0">
+        <Card
+          title="Monthly average daily irradiation, flat panels (kWh/m²/day)"
+          subtitle="PVGIS 5.3 — European Commission Joint Research Centre"
+          bodyClassName="p-0"
+        >
           <Table
             head={['Location', 'Database', 'Jan', 'Mar', 'Jun', 'Sep', 'Dec', 'Source']}
             rows={IRRADIANCE_LOCATIONS.map((l) => [
-              <span className="font-medium">{l.name}, {l.country}</span>,
+              <span className="font-medium">
+                {l.name}, {l.country}
+              </span>,
               l.database,
               fmt(l.horizontal[0], 2),
               fmt(l.horizontal[2], 2),
@@ -252,7 +341,11 @@ export function SourcesPage() {
 
       {tab === 'cables' && (
         <div className="space-y-4">
-          <Card title="Conductors and current capacity" subtitle="Copper Class 5 resistance at 20 °C; ISO 10133 current at 30 °C by insulation rating" bodyClassName="p-0">
+          <Card
+            title="Conductors and current capacity"
+            subtitle="Copper Class 5 resistance at 20 °C; ISO 10133 current at 30 °C by insulation rating"
+            bodyClassName="p-0"
+          >
             <Table
               head={['Size', 'AWG ≈', 'Ω/km', '70 °C', '85–90 °C', '105 °C', '125 °C']}
               rows={CABLE_TABLES.conductors.map((c) => [
@@ -286,8 +379,9 @@ export function SourcesPage() {
 
       <div className="mt-4">
         <Callout tone="warn">
-          VanVolt is a planning and design tool. It does not replace verification of the installation by a competent
-          person against current standards and the manufacturers' installation instructions.
+          VanVolt is a planning and design tool. It does not replace verification of the
+          installation by a competent person against current standards and the manufacturers'
+          installation instructions.
         </Callout>
       </div>
     </>

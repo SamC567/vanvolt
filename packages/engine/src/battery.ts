@@ -129,7 +129,10 @@ export function requiredCapacityAh(
  * Interpolate cycle life at a DoD from datasheet points (log-linear between points,
  * clamped to the published range). Returns null if no data.
  */
-export function cycleLifeAt(points: readonly CycleLifePoint[] | undefined, dodPct: number): number | null {
+export function cycleLifeAt(
+  points: readonly CycleLifePoint[] | undefined,
+  dodPct: number,
+): number | null {
   if (!points || points.length === 0) return null;
   const sorted = [...points].sort((a, b) => a.dodPct - b.dodPct);
   const first = sorted[0]!;
@@ -210,7 +213,13 @@ export function analyseBattery(
   const peukertCurrentA = v > 0 ? dailyBatteryWh / v / PEUKERT_ACTIVE_HOURS : 0;
   const pf = peukertFactor(bank.capacityAh, peukertCurrentA, exponent, chem.ratedHours);
   const usableWh = usableEnergyWh(bank.nominalWh, config.dodPct, pf);
-  const requiredAh = requiredCapacityAh(dailyBatteryWh, config.autonomyTargetDays, v, config.dodPct, pf);
+  const requiredAh = requiredCapacityAh(
+    dailyBatteryWh,
+    config.autonomyTargetDays,
+    v,
+    config.dodPct,
+    pf,
+  );
   const modAh = safe(config.module.capacityAh);
   const cycles = cycleLifeAt(config.module.cycleLife, config.dodPct);
   const vMin = minimumBankVoltage(v, chem);

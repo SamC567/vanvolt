@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { analyseInverter, createDesign, dcInputCurrent, INVERTER_MODELS, recommendInverter, requiredInverterRating } from '../src';
+import {
+  analyseInverter,
+  createDesign,
+  dcInputCurrent,
+  INVERTER_MODELS,
+  recommendInverter,
+  requiredInverterRating,
+} from '../src';
 import { appliance } from './helpers';
 
 const base = () => createDesign().inverter; // Inverter Smart 12/1600: 1300 W, 3000 W peak
@@ -22,14 +29,23 @@ describe('requiredInverterRating and recommendInverter', () => {
     expect(m!.inputVoltage).toBe(12);
     expect(m!.continuousW).toBeGreaterThanOrEqual(1250);
     expect(m!.peakW).toBeGreaterThanOrEqual(2500);
-    const smaller = INVERTER_MODELS.filter((x) => x.inputVoltage === 12 && x.continuousW >= 1250 && x.peakW >= 2500 && x.continuousW < m!.continuousW);
+    const smaller = INVERTER_MODELS.filter(
+      (x) =>
+        x.inputVoltage === 12 &&
+        x.continuousW >= 1250 &&
+        x.peakW >= 2500 &&
+        x.continuousW < m!.continuousW,
+    );
     expect(smaller).toHaveLength(0);
     expect(recommendInverter(INVERTER_MODELS, 12, 100000, 0)).toBeNull();
   });
 });
 
 describe('analyseInverter', () => {
-  const run = (apps: ReturnType<typeof appliance>[], over: Partial<Parameters<typeof analyseInverter>[0]> = {}) =>
+  const run = (
+    apps: ReturnType<typeof appliance>[],
+    over: Partial<Parameters<typeof analyseInverter>[0]> = {},
+  ) =>
     analyseInverter({
       appliances: apps,
       acContinuousW: apps.reduce((t, a) => t + a.powerW, 0),
@@ -65,11 +81,15 @@ describe('analyseInverter', () => {
   });
   it('warns about modified sine wave for motors', () => {
     const cfg = { ...base(), model: { ...base().model, waveform: 'modified-sine' as const } };
-    const r = run([appliance({ supply: 'ac', powerW: 300, surgeW: 300, kind: 'motor' })], { config: cfg });
+    const r = run([appliance({ supply: 'ac', powerW: 300, surgeW: 300, kind: 'motor' })], {
+      config: cfg,
+    });
     expect(r.loadChecks[0]!.status).toBe('warning');
   });
   it('flags loads beyond the battery discharge limit', () => {
-    const r = run([appliance({ supply: 'ac', powerW: 1000, surgeW: 1000 })], { batteryMaxDischargeA: 50 });
+    const r = run([appliance({ supply: 'ac', powerW: 1000, surgeW: 1000 })], {
+      batteryMaxDischargeA: 50,
+    });
     expect(r.loadChecks[0]!.status).toBe('incompatible');
   });
   it('reports DC currents for 12, 24 and 48 V', () => {
@@ -79,7 +99,9 @@ describe('analyseInverter', () => {
     expect(a24!.continuousA).toBeCloseTo(2 * a48!.continuousA, 6);
   });
   it('treats a disabled inverter as incompatible for AC loads', () => {
-    const r = run([appliance({ supply: 'ac', powerW: 100, surgeW: 100 })], { config: { ...base(), enabled: false } });
+    const r = run([appliance({ supply: 'ac', powerW: 100, surgeW: 100 })], {
+      config: { ...base(), enabled: false },
+    });
     expect(r.loadChecks[0]!.status).toBe('incompatible');
   });
 });

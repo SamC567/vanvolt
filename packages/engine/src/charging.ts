@@ -100,9 +100,17 @@ export function shoreCurrent(config: ChargingConfig['shore'], inverter: Inverter
 }
 
 /** Average energy per day for a source running `hours` on `days` days per week. */
-export function weeklyAveragedWh(currentA: number, voltage: number, hours: number, days: number): number {
+export function weeklyAveragedWh(
+  currentA: number,
+  voltage: number,
+  hours: number,
+  days: number,
+): number {
   return (
-    safe(currentA) * safe(voltage) * clamp(safe(hours), 0, 24) * (clamp(Math.round(safe(days)), 0, 7) / 7)
+    safe(currentA) *
+    safe(voltage) *
+    clamp(safe(hours), 0, 24) *
+    (clamp(Math.round(safe(days)), 0, 7) / 7)
   );
 }
 
@@ -113,10 +121,20 @@ export function analyseCharging(input: ChargingInputs): ChargingAnalysis {
 
   const altA = alternatorCurrent(alt);
   const altActive = altA * bankVoltage * clamp(safe(alt.drivingHoursPerDay), 0, 24);
-  const altAvg = weeklyAveragedWh(altA, bankVoltage, alt.drivingHoursPerDay, alt.drivingDaysPerWeek);
+  const altAvg = weeklyAveragedWh(
+    altA,
+    bankVoltage,
+    alt.drivingHoursPerDay,
+    alt.drivingDaysPerWeek,
+  );
   const altInputA =
     alt.enabled && alt.method === 'dcdc'
-      ? dcdcInputCurrent(altA, bankVoltage, alt.dcdc.efficiencyPct, alt.dcdc.inputVoltage ?? DEFAULT_VEHICLE_VOLTAGE)
+      ? dcdcInputCurrent(
+          altA,
+          bankVoltage,
+          alt.dcdc.efficiencyPct,
+          alt.dcdc.inputVoltage ?? DEFAULT_VEHICLE_VOLTAGE,
+        )
       : altA;
 
   const shoreA = shoreCurrent(shore, input.inverter);
@@ -187,7 +205,11 @@ export function analyseCharging(input: ChargingInputs): ChargingAnalysis {
   const neededWh = Math.max(0, input.dailyConsumptionWh - otherStored);
   const altPerHourStored = altA * bankVoltage * eff;
   const alternatorHoursPerDayNeeded =
-    neededWh === 0 ? 0 : altPerHourStored > 0 ? neededWh / altPerHourStored : Number.POSITIVE_INFINITY;
+    neededWh === 0
+      ? 0
+      : altPerHourStored > 0
+        ? neededWh / altPerHourStored
+        : Number.POSITIVE_INFINITY;
 
   return {
     sources,

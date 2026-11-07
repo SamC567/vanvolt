@@ -5,7 +5,14 @@ import type { Design, SystemVoltage } from './types';
 import { SYSTEM_VOLTAGES } from './types';
 import type { SystemAnalysis } from './analysis';
 import { sizeCable } from './cables';
-import { CABLE_TABLES, CHEMISTRIES, DCDC_CHARGERS, INVERTER_MODELS, MPPT_CONTROLLERS, AC_CHARGERS } from './data';
+import {
+  CABLE_TABLES,
+  CHEMISTRIES,
+  DCDC_CHARGERS,
+  INVERTER_MODELS,
+  MPPT_CONTROLLERS,
+  AC_CHARGERS,
+} from './data';
 import { DEFAULT_RUN_SETTINGS } from './analysis';
 import { dcInputCurrent } from './inverter';
 import { CHARGE_VOLTAGE_RATIO } from './solar';
@@ -34,7 +41,8 @@ export function compareSystemVoltages(design: Design, analysis: SystemAnalysis):
   const chem = CHEMISTRIES[design.battery.module.chemistry];
   const nominalWh = analysis.battery.bank.nominalWh;
   const lfp = chem.id === 'lifepo4';
-  const minRatio = analysis.bankVoltage > 0 ? analysis.battery.minimumVoltage / analysis.bankVoltage : 0.9;
+  const minRatio =
+    analysis.bankVoltage > 0 ? analysis.battery.minimumVoltage / analysis.bankVoltage : 0.9;
   const eff = design.inverter.averageEfficiencyPct;
   const runSettings = design.cables.runs.find((r) => r.role === 'battery-inverter');
   const length = runSettings?.lengthM ?? DEFAULT_RUN_SETTINGS['battery-inverter'].lengthM;
@@ -64,16 +72,25 @@ export function compareSystemVoltages(design: Design, analysis: SystemAnalysis):
               bundledCount: 1,
               ambientC: design.cables.ambientC,
             },
-            { conductorTempC: design.cables.conductorTempC, insulationRatingC: design.cables.insulationRatingC },
+            {
+              conductorTempC: design.cables.conductorTempC,
+              insulationRatingC: design.cables.insulationRatingC,
+            },
           )
         : null;
     const notes: string[] = [];
     if (v === 12) notes.push('Widest choice of 12 V appliances and vehicle-compatible chargers.');
     if (v !== 12 && dcLoadCount > 0)
-      notes.push(`${dcLoadCount} DC appliance(s) are typically 12 V — a ${v}→12 V DC-DC converter would be needed.`);
+      notes.push(
+        `${dcLoadCount} DC appliance(s) are typically 12 V — a ${v}→12 V DC-DC converter would be needed.`,
+      );
     if (v !== 12) notes.push(`Alternator charging needs a 12→${v} V DC-DC charger.`);
-    if (v === 48) notes.push('Lowest currents and cable losses; best for high-power AC loads such as induction cooking.');
-    if (cable?.selectedCsaMm2 === null) notes.push('No single standard conductor is large enough for the inverter run.');
+    if (v === 48)
+      notes.push(
+        'Lowest currents and cable losses; best for high-power AC loads such as induction cooking.',
+      );
+    if (cable?.selectedCsaMm2 === null)
+      notes.push('No single standard conductor is large enough for the inverter run.');
     return {
       voltage: v,
       bankNominalV,
@@ -82,8 +99,15 @@ export function compareSystemVoltages(design: Design, analysis: SystemAnalysis):
       inverterPeakA: peakA,
       dcLoadsA: vMin > 0 ? dcLoads / vMin : 0,
       inverterCableMm2: cable?.selectedCsaMm2 ?? null,
-      inverterCableLossW: cable && cable.selectedCsaMm2 !== null ? contA * (cable.dropV * (contA / Math.max(ratedA, 1e-9))) : 0,
-      solarCurrentA: analysis.solar.installedW > 0 ? (analysis.solar.installedW * analysis.solar.losses.controller) / (bankNominalV * CHARGE_VOLTAGE_RATIO) : 0,
+      inverterCableLossW:
+        cable && cable.selectedCsaMm2 !== null
+          ? contA * (cable.dropV * (contA / Math.max(ratedA, 1e-9)))
+          : 0,
+      solarCurrentA:
+        analysis.solar.installedW > 0
+          ? (analysis.solar.installedW * analysis.solar.losses.controller) /
+            (bankNominalV * CHARGE_VOLTAGE_RATIO)
+          : 0,
       availability: {
         inverters: INVERTER_MODELS.filter((m) => m.inputVoltage === v).length,
         mppt: MPPT_CONTROLLERS.filter((m) => m.maxPvPowerW?.[v] !== undefined).length,

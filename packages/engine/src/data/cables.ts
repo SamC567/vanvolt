@@ -8,7 +8,13 @@
  * - Grouping (bundling) factors: ABYC E-11 as reproduced by Blue Sea Systems (secondary).
  * - Fuse families: manufacturer data (secondary — manufacturer sites block automated access).
  */
-import type { AmpacityTable, CableTables, ConductorSpec, FuseFamily, GroupingFactor } from '../cables';
+import type {
+  AmpacityTable,
+  CableTables,
+  ConductorSpec,
+  FuseFamily,
+  GroupingFactor,
+} from '../cables';
 import type { SourceRef } from '../types';
 
 export const IEC60228_SOURCE: SourceRef = {
@@ -20,7 +26,8 @@ export const IEC60228_SOURCE: SourceRef = {
 };
 
 export const ISO10133_SOURCE: SourceRef = {
-  title: 'ISO 10133:2000 Small craft — Electrical systems — Extra-low-voltage d.c. installations, Table A.1',
+  title:
+    'ISO 10133:2000 Small craft — Electrical systems — Extra-low-voltage d.c. installations, Table A.1',
   url: 'https://www.iso.org/search.html?q=ISO%2010133',
   publisher: 'ISO',
   accessed: '2026-11-07',
@@ -70,11 +77,7 @@ export const CONDUCTORS: ConductorSpec[] = [
   { csaMm2: 120, resistanceOhmPerKm: 0.161, awg: '4/0' },
 ];
 
-function isoColumn(
-  id: string,
-  insulationRatingC: number,
-  values: number[],
-): AmpacityTable {
+function isoColumn(id: string, insulationRatingC: number, values: number[]): AmpacityTable {
   const sizes = [0.75, 1, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120];
   const map: Record<string, number> = {};
   sizes.forEach((s, i) => {
@@ -147,7 +150,10 @@ export const FUSE_FAMILIES: FuseFamily[] = [
     interruptNote: 'at 32 V DC',
     ratings: [1, 2, 3, 4, 5, 7.5, 10, 15, 20, 25, 30, 35, 40],
     highInterrupt: false,
-    source: LITTELFUSE('Littelfuse ATO fuse datasheet', 'https://www.littelfuse.com/assetdocs/littelfuse-datasheet-ato?assetguid=bba6ed2a-96e5-4b07-ab5d-0e8d267c0bd1'),
+    source: LITTELFUSE(
+      'Littelfuse ATO fuse datasheet',
+      'https://www.littelfuse.com/assetdocs/littelfuse-datasheet-ato?assetguid=bba6ed2a-96e5-4b07-ab5d-0e8d267c0bd1',
+    ),
   },
   {
     id: 'maxi',
@@ -159,7 +165,10 @@ export const FUSE_FAMILIES: FuseFamily[] = [
     interruptNote: 'at 32 V DC',
     ratings: [20, 25, 30, 35, 40, 50, 60, 70, 80],
     highInterrupt: false,
-    source: LITTELFUSE('Littelfuse MAXI 32V datasheet', 'https://www.littelfuse.com/assetdocs/littelfuse-datasheet-299-maxi32v?assetguid=68b8bbe8-3e51-4c7b-bbda-3c71667f75f3'),
+    source: LITTELFUSE(
+      'Littelfuse MAXI 32V datasheet',
+      'https://www.littelfuse.com/assetdocs/littelfuse-datasheet-299-maxi32v?assetguid=68b8bbe8-3e51-4c7b-bbda-3c71667f75f3',
+    ),
   },
   {
     id: 'midi',
@@ -171,7 +180,10 @@ export const FUSE_FAMILIES: FuseFamily[] = [
     interruptNote: 'at 32 V DC (150–200 A for short-circuit protection only)',
     ratings: [30, 40, 50, 60, 70, 80, 100, 125, 150, 175, 200],
     highInterrupt: false,
-    source: LITTELFUSE('Littelfuse MIDI 32V bolt-down datasheet', 'https://www.littelfuse.com/assetdocs/midi-32v-bolt-down-series-data-sheet?assetguid=b55e8034-180d-40f6-a0a7-bebc2d4a94f5'),
+    source: LITTELFUSE(
+      'Littelfuse MIDI 32V bolt-down datasheet',
+      'https://www.littelfuse.com/assetdocs/midi-32v-bolt-down-series-data-sheet?assetguid=b55e8034-180d-40f6-a0a7-bebc2d4a94f5',
+    ),
   },
   {
     id: 'mega',
@@ -183,7 +195,10 @@ export const FUSE_FAMILIES: FuseFamily[] = [
     interruptNote: 'at 32 V DC (300–500 A for short-circuit protection only)',
     ratings: [40, 60, 80, 100, 125, 150, 175, 200, 225, 250, 300, 350, 400, 450, 500],
     highInterrupt: false,
-    source: LITTELFUSE('Littelfuse MEGA 32V datasheet', 'https://www.littelfuse.com/assetdocs/littelfuse-datasheet-mega-32v?assetguid=9fe0cd60-17bf-4fd7-b18d-977d32179af9'),
+    source: LITTELFUSE(
+      'Littelfuse MEGA 32V datasheet',
+      'https://www.littelfuse.com/assetdocs/littelfuse-datasheet-mega-32v?assetguid=9fe0cd60-17bf-4fd7-b18d-977d32179af9',
+    ),
   },
   {
     id: 'mrbf',

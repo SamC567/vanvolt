@@ -102,8 +102,20 @@ export interface SimulationInputs {
   /** Max battery charge power (W). */
   maxChargeW: number;
   taperStartSoc: number;
-  alternator: { enabled: boolean; powerW: number; hoursPerDay: number; daysPerWeek: number; startHour: number };
-  shore: { enabled: boolean; powerW: number; hoursPerDay: number; daysPerWeek: number; startHour: number };
+  alternator: {
+    enabled: boolean;
+    powerW: number;
+    hoursPerDay: number;
+    daysPerWeek: number;
+    startHour: number;
+  };
+  shore: {
+    enabled: boolean;
+    powerW: number;
+    hoursPerDay: number;
+    daysPerWeek: number;
+    startHour: number;
+  };
 }
 
 export interface SimulationStep {
@@ -175,7 +187,9 @@ export function simulate(input: SimulationInputs): SimulationResult {
       offDay: new Array<number>(24).fill(((safe(a.standbyW) * 24 * qty) / 24) * factor),
     };
   });
-  const idleW = input.hasAcLoads ? safe(input.inverterIdleW) * (clamp(input.inverterOnHoursPerDay, 0, 24) / 24) : 0;
+  const idleW = input.hasAcLoads
+    ? safe(input.inverterIdleW) * (clamp(input.inverterOnHoursPerDay, 0, 24) / 24)
+    : 0;
   const altMask = windowMask(input.alternator.startHour, input.alternator.hoursPerDay);
   const shoreMask = windowMask(input.shore.startHour, input.shore.hoursPerDay);
 
@@ -205,7 +219,9 @@ export function simulate(input: SimulationInputs): SimulationResult {
           ? input.alternator.powerW * (altMask[h] ?? 0)
           : 0;
       const shoreW =
-        input.shore.enabled && activeDay(d, input.shore.daysPerWeek) ? input.shore.powerW * (shoreMask[h] ?? 0) : 0;
+        input.shore.enabled && activeDay(d, input.shore.daysPerWeek)
+          ? input.shore.powerW * (shoreMask[h] ?? 0)
+          : 0;
 
       const supply = solarW + altW + shoreW;
       let batteryW = 0;

@@ -3,21 +3,22 @@
  */
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import clsx from 'clsx';
-import {
-  AlertOctagon,
-  AlertTriangle,
-  CheckCircle2,
-  ExternalLink,
-  Info,
-  X,
-} from 'lucide-react';
+import { AlertOctagon, AlertTriangle, CheckCircle2, ExternalLink, Info, X } from 'lucide-react';
 import type { Finding, Provenance, Severity, SourceRef } from '@vanvolt/engine';
 
 /* ------------------------------------------------------------------ */
 /* Layout                                                              */
 /* ------------------------------------------------------------------ */
 
-export function PageHeader({ title, subtitle, actions }: { title: string; subtitle?: ReactNode; actions?: ReactNode }) {
+export function PageHeader({
+  title,
+  subtitle,
+  actions,
+}: {
+  title: string;
+  subtitle?: ReactNode;
+  actions?: ReactNode;
+}) {
   return (
     <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
@@ -60,8 +61,20 @@ export function Card({
   );
 }
 
-export function Grid({ children, cols = 2, className }: { children: ReactNode; cols?: 2 | 3 | 4; className?: string }) {
-  const map = { 2: 'md:grid-cols-2', 3: 'md:grid-cols-2 xl:grid-cols-3', 4: 'sm:grid-cols-2 xl:grid-cols-4' };
+export function Grid({
+  children,
+  cols = 2,
+  className,
+}: {
+  children: ReactNode;
+  cols?: 2 | 3 | 4;
+  className?: string;
+}) {
+  const map = {
+    2: 'md:grid-cols-2',
+    3: 'md:grid-cols-2 xl:grid-cols-3',
+    4: 'sm:grid-cols-2 xl:grid-cols-4',
+  };
   return <div className={clsx('grid grid-cols-1 gap-4', map[cols], className)}>{children}</div>;
 }
 
@@ -173,9 +186,21 @@ export function TextField({
         </label>
       )}
       {multiline ? (
-        <textarea id={id} className="input min-h-[72px]" value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} />
+        <textarea
+          id={id}
+          className="input min-h-[72px]"
+          value={value}
+          placeholder={placeholder}
+          onChange={(e) => onChange(e.target.value)}
+        />
       ) : (
-        <input id={id} className="input" value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} />
+        <input
+          id={id}
+          className="input"
+          value={value}
+          placeholder={placeholder}
+          onChange={(e) => onChange(e.target.value)}
+        />
       )}
     </div>
   );
@@ -296,7 +321,11 @@ export function Segmented<T extends string | number>({
   ariaLabel: string;
 }) {
   return (
-    <div role="radiogroup" aria-label={ariaLabel} className="inline-flex rounded-lg border border-line bg-surface2 p-0.5">
+    <div
+      role="radiogroup"
+      aria-label={ariaLabel}
+      className="inline-flex rounded-lg border border-line bg-surface2 p-0.5"
+    >
       {options.map((o) => (
         <button
           key={String(o.value)}
@@ -416,7 +445,11 @@ export function Stat({
   );
 }
 
-export function KeyValue({ items }: { items: { label: ReactNode; value: ReactNode; badge?: ReactNode }[] }) {
+export function KeyValue({
+  items,
+}: {
+  items: { label: ReactNode; value: ReactNode; badge?: ReactNode }[];
+}) {
   return (
     <dl className="divide-y divide-line text-sm">
       {items.map((it, i) => (
@@ -453,17 +486,26 @@ export function Meter({
       <div className="mb-1 flex justify-between text-xs">
         <span className="text-ink2">{label}</span>
         <span className="num font-medium">
-          {Math.round(value).toLocaleString('en-GB')} / {Math.round(limit).toLocaleString('en-GB')} {unit}
+          {Math.round(value).toLocaleString('en-GB')} / {Math.round(limit).toLocaleString('en-GB')}{' '}
+          {unit}
         </span>
       </div>
-      <div className="h-2 overflow-hidden rounded-full bg-surface3" role="meter" aria-valuenow={value} aria-valuemax={limit} aria-label={label}>
+      <div
+        className="h-2 overflow-hidden rounded-full bg-surface3"
+        role="meter"
+        aria-valuenow={value}
+        aria-valuemax={limit}
+        aria-label={label}
+      >
         <div
           className={clsx('h-full rounded-full', over ? 'bg-crit' : near ? 'bg-warn' : 'bg-good')}
           style={{ width: `${pct}%` }}
         />
       </div>
       {(over || near) && (
-        <p className={clsx('mt-1 flex items-center gap-1 text-xs', over ? 'text-crit' : 'text-ink2')}>
+        <p
+          className={clsx('mt-1 flex items-center gap-1 text-xs', over ? 'text-crit' : 'text-ink2')}
+        >
           {over ? <AlertOctagon size={12} /> : <AlertTriangle size={12} className="text-warn" />}
           {over ? 'Exceeds limit' : 'Above 80 % of limit'}
         </p>
@@ -477,15 +519,41 @@ export function Meter({
 /* ------------------------------------------------------------------ */
 
 export const PROVENANCE_META: Record<Provenance, { label: string; title: string; dot: string }> = {
-  manufacturer: { label: 'Manufacturer', title: 'Taken from a manufacturer datasheet or product page', dot: 'bg-[var(--series-1)]' },
-  standard: { label: 'Standard', title: 'From a published standard or recognised technical reference', dot: 'bg-[var(--series-7)]' },
+  manufacturer: {
+    label: 'Manufacturer',
+    title: 'Taken from a manufacturer datasheet or product page',
+    dot: 'bg-[var(--series-1)]',
+  },
+  standard: {
+    label: 'Standard',
+    title: 'From a published standard or recognised technical reference',
+    dot: 'bg-[var(--series-7)]',
+  },
   user: { label: 'Your input', title: 'Entered or edited by you', dot: 'bg-ink3' },
-  assumption: { label: 'Assumption', title: 'A documented VanVolt engineering assumption — editable', dot: 'bg-[var(--series-4)]' },
-  estimate: { label: 'Estimate', title: 'A generic typical value, not tied to a specific product', dot: 'bg-[var(--series-5)]' },
-  calculated: { label: 'Calculated', title: 'An estimate calculated by the VanVolt engine', dot: 'bg-[var(--series-3)]' },
+  assumption: {
+    label: 'Assumption',
+    title: 'A documented VanVolt engineering assumption — editable',
+    dot: 'bg-[var(--series-4)]',
+  },
+  estimate: {
+    label: 'Estimate',
+    title: 'A generic typical value, not tied to a specific product',
+    dot: 'bg-[var(--series-5)]',
+  },
+  calculated: {
+    label: 'Calculated',
+    title: 'An estimate calculated by the VanVolt engine',
+    dot: 'bg-[var(--series-3)]',
+  },
 };
 
-export function ProvenanceBadge({ provenance, source }: { provenance: Provenance; source?: SourceRef | undefined }) {
+export function ProvenanceBadge({
+  provenance,
+  source,
+}: {
+  provenance: Provenance;
+  source?: SourceRef | undefined;
+}) {
   const m = PROVENANCE_META[provenance];
   const secondary = source?.verification === 'secondary';
   return (
@@ -500,7 +568,13 @@ export function ProvenanceBadge({ provenance, source }: { provenance: Provenance
   );
 }
 
-export function SourceLink({ source, compact }: { source?: SourceRef | undefined; compact?: boolean }) {
+export function SourceLink({
+  source,
+  compact,
+}: {
+  source?: SourceRef | undefined;
+  compact?: boolean;
+}) {
   if (!source || !source.url) return null;
   return (
     <span className="inline-flex flex-wrap items-center gap-1.5 text-xs">
@@ -515,11 +589,17 @@ export function SourceLink({ source, compact }: { source?: SourceRef | undefined
         {compact ? 'Source' : source.title}
       </a>
       {source.verification === 'document' ? (
-        <span className="rounded bg-surface2 px-1 text-[10px] text-ink2" title="Checked against the cited document">
+        <span
+          className="rounded bg-surface2 px-1 text-[10px] text-ink2"
+          title="Checked against the cited document"
+        >
           verified
         </span>
       ) : source.verification === 'secondary' ? (
-        <span className="rounded bg-surface2 px-1 text-[10px] text-ink3" title="Reported from the source via search extracts — check the datasheet before relying on it">
+        <span
+          className="rounded bg-surface2 px-1 text-[10px] text-ink3"
+          title="Reported from the source via search extracts — check the datasheet before relying on it"
+        >
           secondary — verify
         </span>
       ) : null}
@@ -554,7 +634,13 @@ export function StatusPill({ status }: { status: 'ok' | 'warning' | 'critical' }
   );
 }
 
-export function FindingsList({ findings, empty = 'No issues found.' }: { findings: Finding[]; empty?: string }) {
+export function FindingsList({
+  findings,
+  empty = 'No issues found.',
+}: {
+  findings: Finding[];
+  empty?: string;
+}) {
   if (findings.length === 0)
     return (
       <p className="flex items-center gap-2 text-sm text-ink2">
@@ -567,7 +653,10 @@ export function FindingsList({ findings, empty = 'No issues found.' }: { finding
         const m = SEV_META[f.severity];
         const Icon = m.icon;
         return (
-          <li key={f.id} className="flex gap-2.5 rounded-lg border border-line bg-surface2/50 p-2.5 text-sm">
+          <li
+            key={f.id}
+            className="flex gap-2.5 rounded-lg border border-line bg-surface2/50 p-2.5 text-sm"
+          >
             <Icon size={16} className={clsx('mt-0.5 shrink-0', m.cls)} aria-label={m.label} />
             <div className="min-w-0">
               <p>
@@ -585,7 +674,8 @@ export function FindingsList({ findings, empty = 'No issues found.' }: { finding
 
 export function StatusIcon({ status }: { status: 'ok' | 'warning' | 'incompatible' | 'critical' }) {
   if (status === 'ok') return <CheckCircle2 size={16} className="text-good" aria-label="OK" />;
-  if (status === 'warning') return <AlertTriangle size={16} className="text-warn" aria-label="Warning" />;
+  if (status === 'warning')
+    return <AlertTriangle size={16} className="text-warn" aria-label="Warning" />;
   return <AlertOctagon size={16} className="text-crit" aria-label="Problem" />;
 }
 
@@ -614,7 +704,10 @@ export function Modal({
   }, [open, onClose]);
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-0 backdrop-blur-sm sm:items-center sm:p-4" onClick={onClose}>
+    <div
+      className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-0 backdrop-blur-sm sm:items-center sm:p-4"
+      onClick={onClose}
+    >
       <div
         role="dialog"
         aria-modal="true"
@@ -637,7 +730,15 @@ export function Modal({
   );
 }
 
-export function EmptyState({ title, children, action }: { title: string; children?: ReactNode; action?: ReactNode }) {
+export function EmptyState({
+  title,
+  children,
+  action,
+}: {
+  title: string;
+  children?: ReactNode;
+  action?: ReactNode;
+}) {
   return (
     <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-line px-6 py-10 text-center">
       <p className="text-sm font-medium">{title}</p>
@@ -647,10 +748,25 @@ export function EmptyState({ title, children, action }: { title: string; childre
   );
 }
 
-export function Callout({ children, tone = 'info' }: { children: ReactNode; tone?: 'info' | 'warn' }) {
+export function Callout({
+  children,
+  tone = 'info',
+}: {
+  children: ReactNode;
+  tone?: 'info' | 'warn';
+}) {
   return (
-    <div className={clsx('flex gap-2.5 rounded-lg border p-3 text-sm', tone === 'warn' ? 'border-warn/40 bg-warn/10' : 'border-line bg-surface2/60')}>
-      {tone === 'warn' ? <AlertTriangle size={16} className="mt-0.5 shrink-0 text-warn" /> : <Info size={16} className="mt-0.5 shrink-0 text-accent" />}
+    <div
+      className={clsx(
+        'flex gap-2.5 rounded-lg border p-3 text-sm',
+        tone === 'warn' ? 'border-warn/40 bg-warn/10' : 'border-line bg-surface2/60',
+      )}
+    >
+      {tone === 'warn' ? (
+        <AlertTriangle size={16} className="mt-0.5 shrink-0 text-warn" />
+      ) : (
+        <Info size={16} className="mt-0.5 shrink-0 text-accent" />
+      )}
       <div className="min-w-0 text-ink2">{children}</div>
     </div>
   );

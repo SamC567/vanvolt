@@ -17,8 +17,19 @@ export type Route =
   | 'sources';
 
 export const ROUTES: Route[] = [
-  'overview', 'loads', 'battery', 'solar', 'charging', 'inverter', 'cables',
-  'simulation', 'diagram', 'compare', 'report', 'projects', 'sources',
+  'overview',
+  'loads',
+  'battery',
+  'solar',
+  'charging',
+  'inverter',
+  'cables',
+  'simulation',
+  'diagram',
+  'compare',
+  'report',
+  'projects',
+  'sources',
 ];
 
 function parse(): Route {

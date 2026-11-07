@@ -7,7 +7,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
   {
     id: 'victron-bluesolar-mono-115w-12v',
     manufacturer: 'Victron',
-    model: "BlueSolar Mono 115W-12V (SPM041151202, series 4b)",
+    model: 'BlueSolar Mono 115W-12V (SPM041151202, series 4b)',
     powerW: 115,
     vmpV: 19.0,
     impA: 6.04,
@@ -29,7 +29,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
   {
     id: 'victron-bluesolar-mono-175w-12v',
     manufacturer: 'Victron',
-    model: "BlueSolar Mono 175W-12V (SPM041751200, series 4a)",
+    model: 'BlueSolar Mono 175W-12V (SPM041751200, series 4a)',
     powerW: 175,
     vmpV: 19.4,
     impA: 9.03,
@@ -51,7 +51,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
   {
     id: 'victron-bluesolar-mono-215w-24v',
     manufacturer: 'Victron',
-    model: "BlueSolar Mono 215W-24V (SPM042152402, series 4b)",
+    model: 'BlueSolar Mono 215W-24V (SPM042152402, series 4b)',
     powerW: 215,
     vmpV: 40.1,
     impA: 5.36,
@@ -73,7 +73,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
   {
     id: 'victron-bluesolar-mono-130w',
     manufacturer: 'Victron',
-    model: "BlueSolar Mono 130W (SPM041303603, series 4c)",
+    model: 'BlueSolar Mono 130W (SPM041303603, series 4c)',
     powerW: 130,
     vmpV: 21.1,
     impA: 6.18,
@@ -94,7 +94,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
   {
     id: 'victron-bluesolar-mono-190w',
     manufacturer: 'Victron',
-    model: "BlueSolar Mono 190W (SPM041903903, series 4c)",
+    model: 'BlueSolar Mono 190W (SPM041903903, series 4c)',
     powerW: 190,
     vmpV: 21.8,
     impA: 8.71,
@@ -115,7 +115,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
   {
     id: 'victron-bluesolar-mono-235w',
     manufacturer: 'Victron',
-    model: "BlueSolar Mono 235W (SPM042357203, series 4c)",
+    model: 'BlueSolar Mono 235W (SPM042357203, series 4c)',
     powerW: 235,
     vmpV: 41.4,
     impA: 5.68,
@@ -136,7 +136,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
   {
     id: 'renogy-rng-100d-ss-100w-12v-mono',
     manufacturer: 'Renogy',
-    model: "RNG-100D-SS 100W 12V Mono (Version 3 / G3)",
+    model: 'RNG-100D-SS 100W 12V Mono (Version 3 / G3)',
     powerW: 100,
     vmpV: 20.4,
     impA: 4.91,
@@ -156,7 +156,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
   {
     id: 'renogy-rng-175d-175w-12v-mono',
     manufacturer: 'Renogy',
-    model: "RNG-175D 175W 12V Mono (G2)",
+    model: 'RNG-175D 175W 12V Mono (G2)',
     powerW: 175,
     vmpV: 18.1,
     impA: 9.67,
@@ -176,7 +176,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
   {
     id: 'renogy-rsp200d-200w-12v-mono',
     manufacturer: 'Renogy',
-    model: "RSP200D 200W 12V Mono (G3)",
+    model: 'RSP200D 200W 12V Mono (G3)',
     powerW: 200,
     vmpV: 19.2,
     impA: 10.42,
@@ -196,7 +196,7 @@ export const SOLAR_PANELS: SolarPanel[] = [
   {
     id: 'renogy-rng-100db-h-100w-12v-flexible-mono',
     manufacturer: 'Renogy',
-    model: "RNG-100DB-H 100W 12V Flexible Mono (G3)",
+    model: 'RNG-100DB-H 100W 12V Flexible Mono (G3)',
     powerW: 100,
     vmpV: 20.7,
     impA: 4.84,

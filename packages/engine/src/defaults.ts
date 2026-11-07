@@ -1,13 +1,7 @@
 /**
  * Factories for new designs, appliances and cable runs.
  */
-import type {
-  Appliance,
-  CableRole,
-  CableRunSettings,
-  Design,
-  SystemVoltage,
-} from './types';
+import type { Appliance, CableRole, CableRunSettings, Design, SystemVoltage } from './types';
 import {
   AC_CHARGERS,
   APPLIANCE_PRESETS,
@@ -30,13 +24,19 @@ function byId<T extends { id: string }>(list: readonly T[], id: string): T {
   return deepClone(found);
 }
 
-export function applianceFromPreset(presetId: string, overrides: Partial<Appliance> = {}): Appliance {
+export function applianceFromPreset(
+  presetId: string,
+  overrides: Partial<Appliance> = {},
+): Appliance {
   const preset = APPLIANCE_PRESETS.find((p) => p.presetId === presetId);
   if (!preset) throw new Error(`Appliance preset not found: ${presetId}`);
   return applianceFrom(preset, overrides);
 }
 
-export function applianceFrom(preset: AppliancePreset, overrides: Partial<Appliance> = {}): Appliance {
+export function applianceFrom(
+  preset: AppliancePreset,
+  overrides: Partial<Appliance> = {},
+): Appliance {
   const { presetId, ...rest } = deepClone(preset);
   return { ...rest, id: uid('app'), enabled: true, libraryId: presetId, ...overrides };
 }
@@ -146,5 +146,11 @@ export function createDesign(opts: NewDesignOptions = {}): Design {
 export function duplicateDesign(design: Design, name?: string): Design {
   const copy = deepClone(design);
   const now = new Date().toISOString();
-  return { ...copy, id: uid('design'), name: name ?? `${design.name} (copy)`, createdAt: now, updatedAt: now };
+  return {
+    ...copy,
+    id: uid('design'),
+    name: name ?? `${design.name} (copy)`,
+    createdAt: now,
+    updatedAt: now,
+  };
 }

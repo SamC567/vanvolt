@@ -5,7 +5,9 @@ import { appliance, NO_INVERTER } from './helpers';
 describe('applianceUseDayWh', () => {
   it('multiplies power × hours × duty × quantity', () => {
     // 40 W × 5 h × 50 % × 2 units = 200 Wh
-    expect(applianceUseDayWh(appliance({ powerW: 40, hoursPerDay: 5, dutyCyclePct: 50, quantity: 2 }))).toBe(200);
+    expect(
+      applianceUseDayWh(appliance({ powerW: 40, hoursPerDay: 5, dutyCyclePct: 50, quantity: 2 })),
+    ).toBe(200);
   });
   it('adds standby for the remaining hours', () => {
     // 100 W × 2 h + 1 W × 22 h = 222 Wh
@@ -58,11 +60,12 @@ describe('calculateConsumption', () => {
     expect(r.batteryAhPerWeek).toBe(140);
   });
   it('adds inverter conversion loss and idle draw for AC loads', () => {
-    const r = calculateConsumption(
-      [appliance({ supply: 'ac', powerW: 900, hoursPerDay: 1 })],
-      12,
-      { enabled: true, averageEfficiencyPct: 90, idleW: 10, onHoursPerDay: 5 },
-    );
+    const r = calculateConsumption([appliance({ supply: 'ac', powerW: 900, hoursPerDay: 1 })], 12, {
+      enabled: true,
+      averageEfficiencyPct: 90,
+      idleW: 10,
+      onHoursPerDay: 5,
+    });
     expect(r.acLoadWhPerDay).toBe(900);
     expect(r.inverterLossWhPerDay).toBeCloseTo(100, 6); // 900/0.9 − 900
     expect(r.inverterIdleWhPerDay).toBe(50);
@@ -71,7 +74,11 @@ describe('calculateConsumption', () => {
     expect(r.battery.continuousW).toBeCloseTo(1010, 6); // 900/0.9 + 10 W idle
   });
   it('separates average day from a full-use day', () => {
-    const r = calculateConsumption([appliance({ powerW: 70, hoursPerDay: 1, daysPerWeek: 1 })], 12, NO_INVERTER);
+    const r = calculateConsumption(
+      [appliance({ powerW: 70, hoursPerDay: 1, daysPerWeek: 1 })],
+      12,
+      NO_INVERTER,
+    );
     expect(r.batteryWhPerDay).toBeCloseTo(10, 6);
     expect(r.batteryWhPerFullUseDay).toBe(70);
   });

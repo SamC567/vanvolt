@@ -11,7 +11,14 @@ import {
   SOLAR_PANELS,
 } from '../src';
 
-const sourced = [...BATTERY_MODULES, ...INVERTER_MODELS, ...MPPT_CONTROLLERS, ...DCDC_CHARGERS, ...AC_CHARGERS, ...SOLAR_PANELS];
+const sourced = [
+  ...BATTERY_MODULES,
+  ...INVERTER_MODELS,
+  ...MPPT_CONTROLLERS,
+  ...DCDC_CHARGERS,
+  ...AC_CHARGERS,
+  ...SOLAR_PANELS,
+];
 
 describe('component library integrity', () => {
   it('every manufacturer item cites an https source with verification status', () => {
@@ -26,7 +33,8 @@ describe('component library integrity', () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
   it('electrical values are positive and plausible', () => {
-    for (const b of BATTERY_MODULES) expect(b.capacityAh * b.nominalVoltage, b.id).toBeGreaterThan(0);
+    for (const b of BATTERY_MODULES)
+      expect(b.capacityAh * b.nominalVoltage, b.id).toBeGreaterThan(0);
     for (const i of INVERTER_MODELS) {
       expect(i.peakW, i.id).toBeGreaterThanOrEqual(i.continuousW);
       expect(i.maxEfficiencyPct, i.id).toBeLessThanOrEqual(100);
@@ -55,7 +63,10 @@ describe('irradiance data', () => {
     for (const l of IRRADIANCE_LOCATIONS) {
       expect(l.horizontal, l.id).toHaveLength(12);
       expect(l.tilted, l.id).toHaveLength(12);
-      expect(l.horizontal.every((v) => v >= 0 && v < 10), l.id).toBe(true);
+      expect(
+        l.horizontal.every((v) => v >= 0 && v < 10),
+        l.id,
+      ).toBe(true);
       expect(l.source.url, l.id).toMatch(/^https:\/\/re\.jrc\.ec\.europa\.eu/);
     }
   });
@@ -64,7 +75,8 @@ describe('irradiance data', () => {
 describe('cable tables', () => {
   it('resistance decreases and ampacity increases with cross-section', () => {
     const c = CABLE_TABLES.conductors;
-    for (let i = 1; i < c.length; i++) expect(c[i]!.resistanceOhmPerKm).toBeLessThan(c[i - 1]!.resistanceOhmPerKm);
+    for (let i = 1; i < c.length; i++)
+      expect(c[i]!.resistanceOhmPerKm).toBeLessThan(c[i - 1]!.resistanceOhmPerKm);
     for (const t of CABLE_TABLES.ampacity) {
       const vals = c.map((x) => t.values[String(x.csaMm2)]!);
       for (let i = 1; i < vals.length; i++) expect(vals[i]!, t.id).toBeGreaterThan(vals[i - 1]!);

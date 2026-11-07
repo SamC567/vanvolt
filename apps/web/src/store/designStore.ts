@@ -94,7 +94,10 @@ export const useStore = create<StoreState>()(
         const prev = h.past[h.past.length - 1]!;
         set({
           designs: { ...s.designs, [current.id]: prev },
-          history: { ...s.history, [current.id]: { past: h.past.slice(0, -1), future: [current, ...h.future] } },
+          history: {
+            ...s.history,
+            [current.id]: { past: h.past.slice(0, -1), future: [current, ...h.future] },
+          },
         });
       },
 
@@ -106,7 +109,10 @@ export const useStore = create<StoreState>()(
         const next = h.future[0]!;
         set({
           designs: { ...s.designs, [current.id]: next },
-          history: { ...s.history, [current.id]: { past: [...h.past, current], future: h.future.slice(1) } },
+          history: {
+            ...s.history,
+            [current.id]: { past: [...h.past, current], future: h.future.slice(1) },
+          },
         });
       },
 
@@ -119,7 +125,11 @@ export const useStore = create<StoreState>()(
 
       newDesign: (name) => {
         const d = createDesign({ name: name ?? 'New campervan design' });
-        set((s) => ({ designs: { ...s.designs, [d.id]: d }, order: [...s.order, d.id], activeId: d.id }));
+        set((s) => ({
+          designs: { ...s.designs, [d.id]: d },
+          order: [...s.order, d.id],
+          activeId: d.id,
+        }));
         return d.id;
       },
 
@@ -127,7 +137,11 @@ export const useStore = create<StoreState>()(
         const src = get().designs[id];
         if (!src) return get().activeId;
         const d = duplicateDesign(src);
-        set((s) => ({ designs: { ...s.designs, [d.id]: d }, order: [...s.order, d.id], activeId: d.id }));
+        set((s) => ({
+          designs: { ...s.designs, [d.id]: d },
+          order: [...s.order, d.id],
+          activeId: d.id,
+        }));
         return d.id;
       },
 
@@ -155,7 +169,9 @@ export const useStore = create<StoreState>()(
       rename: (id, name) => {
         const d = get().designs[id];
         if (!d) return;
-        set((s) => ({ designs: { ...s.designs, [id]: { ...d, name, updatedAt: new Date().toISOString() } } }));
+        set((s) => ({
+          designs: { ...s.designs, [id]: { ...d, name, updatedAt: new Date().toISOString() } },
+        }));
       },
 
       importDesign: (raw) => {
@@ -174,8 +190,14 @@ export const useStore = create<StoreState>()(
         const ex = EXAMPLE_DESIGNS.find((e) => e.id === exampleId);
         if (!ex) return get().activeId;
         const built = ex.build();
-        const d = get().designs[built.id] ? { ...built, id: uid('design'), name: `${built.name} (copy)` } : built;
-        set((s) => ({ designs: { ...s.designs, [d.id]: d }, order: [...s.order, d.id], activeId: d.id }));
+        const d = get().designs[built.id]
+          ? { ...built, id: uid('design'), name: `${built.name} (copy)` }
+          : built;
+        set((s) => ({
+          designs: { ...s.designs, [d.id]: d },
+          order: [...s.order, d.id],
+          activeId: d.id,
+        }));
         return d.id;
       },
 
@@ -195,7 +217,15 @@ export const useStore = create<StoreState>()(
         set({
           designs: {
             ...s.designs,
-            [d.id]: { ...d, diagram: { positions: { ...d.diagram.positions, [nodeId]: { x: Math.round(pos.x), y: Math.round(pos.y) } } } },
+            [d.id]: {
+              ...d,
+              diagram: {
+                positions: {
+                  ...d.diagram.positions,
+                  [nodeId]: { x: Math.round(pos.x), y: Math.round(pos.y) },
+                },
+              },
+            },
           },
         });
       },
@@ -238,4 +268,5 @@ export const useStore = create<StoreState>()(
   ),
 );
 
-export const useActiveDesign = () => useStore((s) => s.designs[s.activeId] ?? s.designs[s.order[0]!]!);
+export const useActiveDesign = () =>
+  useStore((s) => s.designs[s.activeId] ?? s.designs[s.order[0]!]!);

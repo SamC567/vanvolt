@@ -18,19 +18,24 @@ describe('analyseDesign', () => {
     expect(a.assumptions.length).toBeGreaterThan(10);
   });
 
-  it.each(EXAMPLE_DESIGNS.map((e) => [e.id, e.build] as const))('example %s analyses and is deterministic', (_, build) => {
-    const d = build();
-    const a = analyseDesign(d);
-    expect(Number.isFinite(a.summary.dailyWh)).toBe(true);
-    expect(a.battery.bank.voltageClass).toBe(d.systemVoltage);
-    expect(analyseDesign(build()).summary).toEqual(a.summary);
-  });
+  it.each(EXAMPLE_DESIGNS.map((e) => [e.id, e.build] as const))(
+    'example %s analyses and is deterministic',
+    (_, build) => {
+      const d = build();
+      const a = analyseDesign(d);
+      expect(Number.isFinite(a.summary.dailyWh)).toBe(true);
+      expect(a.battery.bank.voltageClass).toBe(d.systemVoltage);
+      expect(analyseDesign(build()).summary).toEqual(a.summary);
+    },
+  );
 
   it('flags a battery/system voltage mismatch', () => {
     const d = createDesign();
     d.systemVoltage = 24;
     const a = analyseDesign(d);
-    expect(a.findings.some((f) => f.id === 'battery:voltage-mismatch' && f.severity === 'critical')).toBe(true);
+    expect(
+      a.findings.some((f) => f.id === 'battery:voltage-mismatch' && f.severity === 'critical'),
+    ).toBe(true);
     expect(a.status).toBe('critical');
   });
 
@@ -69,7 +74,9 @@ describe('compareDesigns', () => {
     const a = createDesign();
     const b = duplicateDesign(a, 'Bigger battery');
     b.battery.parallel = 2;
-    const rows = compareDesigns([a, b].map((design) => ({ design, analysis: analyseDesign(design) })));
+    const rows = compareDesigns(
+      [a, b].map((design) => ({ design, analysis: analyseDesign(design) })),
+    );
     const usable = rows.find((r) => r.metric.key === 'usableWh')!;
     expect(usable.bestIndex).toBe(1);
     const volts = rows.find((r) => r.metric.key === 'systemVoltage')!;

@@ -64,7 +64,8 @@ const MSW_SENSITIVE: Partial<Record<LoadKind, string>> = {
   compressor: 'Compressor motors run hotter and may fail to start on a modified sine wave.',
   microwave: 'Microwaves run hotter and with reduced output on a modified sine wave.',
   induction: 'Induction hobs may malfunction or refuse to operate on a modified sine wave.',
-  electronic: 'Some electronics (dimmers, timers, speed controllers, chargers) may buzz or malfunction on a modified sine wave.',
+  electronic:
+    'Some electronics (dimmers, timers, speed controllers, chargers) may buzz or malfunction on a modified sine wave.',
   lighting: 'Dimmable lights and some LED drivers may flicker or buzz on a modified sine wave.',
 };
 
@@ -181,7 +182,9 @@ export function analyseInverter(input: InverterInputs): InverterAnalysis {
     : null;
   const recommended =
     withMargin ??
-    (input.library ? recommendInverter(input.library, input.systemVoltage, input.acContinuousW, req.peakW) : null);
+    (input.library
+      ? recommendInverter(input.library, input.systemVoltage, input.acContinuousW, req.peakW)
+      : null);
   const recommendedMeetsMargin = withMargin !== null;
 
   const currentsByVoltage: DcCurrentAtVoltage[] = SYSTEM_VOLTAGES.map((v) => {
@@ -210,7 +213,8 @@ export function analyseInverter(input: InverterInputs): InverterAnalysis {
     inputVoltageMatches: model.inputVoltage === input.systemVoltage,
     loadChecks,
     currentsByVoltage,
-    idleWhPerDay: enabled && hasAcLoads ? safe(model.idleW) * Math.min(24, safe(config.onHoursPerDay)) : 0,
+    idleWhPerDay:
+      enabled && hasAcLoads ? safe(model.idleW) * Math.min(24, safe(config.onHoursPerDay)) : 0,
     recommended,
     recommendedMeetsMargin,
   };

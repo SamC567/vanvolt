@@ -48,26 +48,26 @@ Then open http://localhost:5173 in your browser.
 
 ### Other commands
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | Start the development server with hot reload |
-| `npm test` | Run all unit tests (engine + web) |
-| `npm run typecheck` | Type-check all packages |
-| `npm run build` | Production build into `apps/web/dist` |
-| `npm run preview` | Serve the production build at http://localhost:4173 |
-| `npm run check` | Typecheck, test and build in one go |
+| Command             | What it does                                        |
+| ------------------- | --------------------------------------------------- |
+| `npm run dev`       | Start the development server with hot reload        |
+| `npm test`          | Run all unit tests (engine + web)                   |
+| `npm run typecheck` | Type-check all packages                             |
+| `npm run build`     | Production build into `apps/web/dist`               |
+| `npm run preview`   | Serve the production build at http://localhost:4173 |
+| `npm run check`     | Typecheck, test and build in one go                 |
 
 ## Example designs
 
 Four worked examples are built into the app (Projects → Example designs) and also exported to
 [`examples/`](examples) as JSON files you can import:
 
-| File | Design |
-| --- | --- |
-| `weekend-van.vanvolt.json` | 12 V, 200 Ah LiFePO4 weekend van, 380 W flat solar, 30 A DC-DC |
-| `full-time.vanvolt.json` | 12 V, 400 Ah LiFePO4 full-time remote-working van in Lisbon, Starlink, induction |
-| `winter-agm.vanvolt.json` | 12 V, 220 Ah AGM budget ski van in Munich in winter, PWM controller |
-| `48v-motorhome.vanvolt.json` | 48 V, 10 kWh all-electric motorhome with a 3 kVA inverter/charger |
+| File                         | Design                                                                           |
+| ---------------------------- | -------------------------------------------------------------------------------- |
+| `weekend-van.vanvolt.json`   | 12 V, 200 Ah LiFePO4 weekend van, 380 W flat solar, 30 A DC-DC                   |
+| `full-time.vanvolt.json`     | 12 V, 400 Ah LiFePO4 full-time remote-working van in Lisbon, Starlink, induction |
+| `winter-agm.vanvolt.json`    | 12 V, 220 Ah AGM budget ski van in Munich in winter, PWM controller              |
+| `48v-motorhome.vanvolt.json` | 48 V, 10 kWh all-electric motorhome with a 3 kVA inverter/charger                |
 
 Regenerate them with `npm run examples`.
 
@@ -80,7 +80,7 @@ Regenerate them with `npm run examples`.
 
 VanVolt distinguishes between **manufacturer data**, **standards / reference data**,
 **user inputs**, **engineering assumptions** and **calculated estimates**. Each is labelled
-in the interface and in the PDF report, with links to sources (see *Data & sources* in the app).
+in the interface and in the PDF report, with links to sources (see _Data & sources_ in the app).
 
 Every source also carries a verification status:
 
@@ -91,7 +91,7 @@ Every source also carries a verification status:
   applies to the fuse families, the bundling factors and a few appliances. Check these on the
   datasheet before relying on them.
 
-Projects are stored only in your browser (`localStorage`). Use *Projects → Export* to back up.
+Projects are stored only in your browser (`localStorage`). Use _Projects → Export_ to back up.
 
 ## Licence
 

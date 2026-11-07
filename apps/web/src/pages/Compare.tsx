@@ -24,7 +24,10 @@ export function ComparePage() {
 
   return (
     <>
-      <PageHeader title="Compare designs" subtitle="Pick up to four designs to compare side by side. The best value for each metric is highlighted." />
+      <PageHeader
+        title="Compare designs"
+        subtitle="Pick up to four designs to compare side by side. The best value for each metric is highlighted."
+      />
 
       <Card title="Designs to compare" className="mb-4">
         <div className="flex flex-wrap gap-2">
@@ -38,7 +41,13 @@ export function ComparePage() {
                 aria-pressed={on}
                 onClick={() => toggleCompare(id)}
               >
-                {on && <span className="h-2.5 w-2.5 rounded-sm" style={{ background: DESIGN_COLORS[idx] }} aria-hidden />}
+                {on && (
+                  <span
+                    className="h-2.5 w-2.5 rounded-sm"
+                    style={{ background: DESIGN_COLORS[idx] }}
+                    aria-hidden
+                  />
+                )}
                 {designs[id]?.name}
               </button>
             );
@@ -49,7 +58,8 @@ export function ComparePage() {
 
       {items.length < 2 ? (
         <EmptyState title="Select at least two designs">
-          Tip: duplicate a design in Projects, change one thing (battery size, voltage, solar), then compare.
+          Tip: duplicate a design in Projects, change one thing (battery size, voltage, solar), then
+          compare.
         </EmptyState>
       ) : (
         <>
@@ -62,7 +72,11 @@ export function ComparePage() {
                     {items.map(({ design }, i) => (
                       <th key={design.id} className="text-right normal-case">
                         <span className="inline-flex items-center gap-1.5">
-                          <span className="h-2.5 w-2.5 rounded-sm" style={{ background: DESIGN_COLORS[i] }} aria-hidden />
+                          <span
+                            className="h-2.5 w-2.5 rounded-sm"
+                            style={{ background: DESIGN_COLORS[i] }}
+                            aria-hidden
+                          />
                           {design.name}
                         </span>
                       </th>
@@ -74,9 +88,16 @@ export function ComparePage() {
                     <tr key={r.metric.key}>
                       <td className="text-ink2">{r.metric.label}</td>
                       {r.values.map((v, i) => (
-                        <td key={i} className={`num text-right ${r.bestIndex === i ? 'font-semibold' : ''}`}>
-                          {v === null ? '—' : `${fmt(v, r.metric.decimals)}${r.metric.unit ? ` ${r.metric.unit}` : ''}`}
-                          {r.bestIndex === i && <Trophy size={12} className="ml-1 inline text-good" aria-label="Best" />}
+                        <td
+                          key={i}
+                          className={`num text-right ${r.bestIndex === i ? 'font-semibold' : ''}`}
+                        >
+                          {v === null
+                            ? '—'
+                            : `${fmt(v, r.metric.decimals)}${r.metric.unit ? ` ${r.metric.unit}` : ''}`}
+                          {r.bestIndex === i && (
+                            <Trophy size={12} className="ml-1 inline text-good" aria-label="Best" />
+                          )}
                         </td>
                       ))}
                     </tr>
@@ -95,7 +116,11 @@ export function ComparePage() {
                     key={k}
                     title={row.metric.label}
                     unit={row.metric.unit}
-                    items={items.map(({ design }, i) => ({ name: design.name, value: row.values[i] ?? 0, color: DESIGN_COLORS[i]! }))}
+                    items={items.map(({ design }, i) => ({
+                      name: design.name,
+                      value: row.values[i] ?? 0,
+                      color: DESIGN_COLORS[i]!,
+                    }))}
                   />
                 );
               })}
@@ -103,14 +128,21 @@ export function ComparePage() {
             <div className="mt-3 flex flex-wrap gap-3 text-xs text-ink2">
               {items.map(({ design }, i) => (
                 <span key={design.id} className="flex items-center gap-1.5">
-                  <span className="h-2.5 w-2.5 rounded-sm" style={{ background: DESIGN_COLORS[i] }} aria-hidden />
+                  <span
+                    className="h-2.5 w-2.5 rounded-sm"
+                    style={{ background: DESIGN_COLORS[i] }}
+                    aria-hidden
+                  />
                   {design.name}
                 </span>
               ))}
             </div>
           </Card>
           <div className="mt-4">
-            <Callout>Results come from each design's own location, loads and settings, so make sure you are comparing like with like.</Callout>
+            <Callout>
+              Results come from each design's own location, loads and settings, so make sure you are
+              comparing like with like.
+            </Callout>
           </div>
         </>
       )}

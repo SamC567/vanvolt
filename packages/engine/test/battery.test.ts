@@ -15,11 +15,29 @@ import {
 } from '../src';
 
 const lfp: BatteryModule = {
-  id: 't', manufacturer: 'T', model: 'T', chemistry: 'lifepo4', nominalVoltage: 12.8, capacityAh: 100,
-  maxContinuousDischargeA: 100, maxContinuousChargeA: 50, provenance: 'user',
-  cycleLife: [{ dodPct: 50, cycles: 5000 }, { dodPct: 80, cycles: 2500 }],
+  id: 't',
+  manufacturer: 'T',
+  model: 'T',
+  chemistry: 'lifepo4',
+  nominalVoltage: 12.8,
+  capacityAh: 100,
+  maxContinuousDischargeA: 100,
+  maxContinuousChargeA: 50,
+  provenance: 'user',
+  cycleLife: [
+    { dodPct: 50, cycles: 5000 },
+    { dodPct: 80, cycles: 2500 },
+  ],
 };
-const agm: BatteryModule = { id: 'a', manufacturer: 'A', model: 'A', chemistry: 'agm', nominalVoltage: 12, capacityAh: 100, provenance: 'user' };
+const agm: BatteryModule = {
+  id: 'a',
+  manufacturer: 'A',
+  model: 'A',
+  chemistry: 'agm',
+  nominalVoltage: 12,
+  capacityAh: 100,
+  provenance: 'user',
+};
 
 describe('bankSpec', () => {
   it('multiplies voltage by series and capacity by parallel', () => {
@@ -51,7 +69,8 @@ describe('peukertFactor', () => {
   });
   it('produces a monotonic capacity curve', () => {
     const c = peukertCurve(100, 1.25, 20);
-    for (let i = 1; i < c.length; i++) expect(c[i]!.capacityPct).toBeGreaterThanOrEqual(c[i - 1]!.capacityPct);
+    for (let i = 1; i < c.length; i++)
+      expect(c[i]!.capacityPct).toBeGreaterThanOrEqual(c[i - 1]!.capacityPct);
     expect(c[c.length - 1]!.capacityPct).toBeCloseTo(100, 3);
   });
 });

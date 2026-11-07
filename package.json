@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "description": "Independent campervan electrical design and simulation platform",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SamC567/vanvolt.git"
+  },
   "type": "module",
   "workspaces": [
     "packages/*",
@@ -15,10 +20,16 @@
     "test": "npm run test -w @vanvolt/engine && npm run test -w @vanvolt/web",
     "test:engine": "npm run test -w @vanvolt/engine",
     "typecheck": "npm run typecheck -w @vanvolt/engine && npm run typecheck -w @vanvolt/web",
-    "check": "npm run typecheck && npm test && npm run build",
-    "examples": "vite-node scripts/export-examples.ts"
+    "check": "npm run format:check && npm run typecheck && npm test && npm run test:hooks && npm run build",
+    "examples": "vite-node scripts/export-examples.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:hooks": "node --test .claude/hooks/"
   },
   "engines": {
     "node": ">=20.19"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2"
   }
 }

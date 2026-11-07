@@ -23,12 +23,20 @@ function lib<T extends { id: string }>(list: readonly T[], id: string): T {
 }
 
 function apps(prefix: string, items: [string, Partial<Appliance>?][]): Appliance[] {
-  return items.map(([presetId, overrides], i) => applianceFromPreset(presetId, { ...overrides, id: `${prefix}-app-${i + 1}` }));
+  return items.map(([presetId, overrides], i) =>
+    applianceFromPreset(presetId, { ...overrides, id: `${prefix}-app-${i + 1}` }),
+  );
 }
 
 function base(id: string, name: string, description: string): Design {
   const d = createDesign({ name, description });
-  return { ...d, id, createdAt: EPOCH, updatedAt: EPOCH, cables: { ...d.cables, runs: defaultCableRuns() } };
+  return {
+    ...d,
+    id,
+    createdAt: EPOCH,
+    updatedAt: EPOCH,
+    cables: { ...d.cables, runs: defaultCableRuns() },
+  };
 }
 
 export function weekendVan(): Design {
@@ -55,7 +63,13 @@ export function fullTimeOffGrid(): Design {
     'Full-time off-grid — 12 V, 400 Ah LiFePO4',
     'Remote worker living in a van year-round in southern Europe: Starlink, laptop, fridge, roof fan, occasional induction cooking. 600 W solar and a 50 A DC-DC charger.',
   );
-  d.battery = { module: lib(BATTERY_MODULES, 'victron-lfp-ng-12-200'), series: 1, parallel: 2, dodPct: 80, autonomyTargetDays: 2 };
+  d.battery = {
+    module: lib(BATTERY_MODULES, 'victron-lfp-ng-12-200'),
+    series: 1,
+    parallel: 2,
+    dodPct: 80,
+    autonomyTargetDays: 2,
+  };
   d.solar = {
     ...d.solar,
     panel: lib(SOLAR_PANELS, 'renogy-rsp200d-200w-12v-mono'),
@@ -64,8 +78,18 @@ export function fullTimeOffGrid(): Design {
     locationId: 'lisbon',
     controller: lib(MPPT_CONTROLLERS, 'victron-smartsolar-100-50'),
   };
-  d.inverter = { ...d.inverter, model: lib(INVERTER_MODELS, 'victron-inverter-smart-12-3000'), averageEfficiencyPct: 88, onHoursPerDay: 6 };
-  d.charging.alternator = { ...d.charging.alternator, dcdc: lib(DCDC_CHARGERS, 'victron-orion-xs-12-12-50'), drivingHoursPerDay: 1.5, drivingDaysPerWeek: 2 };
+  d.inverter = {
+    ...d.inverter,
+    model: lib(INVERTER_MODELS, 'victron-inverter-smart-12-3000'),
+    averageEfficiencyPct: 88,
+    onHoursPerDay: 6,
+  };
+  d.charging.alternator = {
+    ...d.charging.alternator,
+    dcdc: lib(DCDC_CHARGERS, 'victron-orion-xs-12-12-50'),
+    drivingHoursPerDay: 1.5,
+    drivingDaysPerWeek: 2,
+  };
   d.appliances = apps('ft', [
     ['dometic-crx-65'],
     ['starlink-mini', { hoursPerDay: 10, profile: 'daytime' }],
@@ -87,7 +111,13 @@ export function winterAgmVan(): Design {
     'Winter ski van — 12 V, 220 Ah AGM (budget)',
     'Budget build on lead-acid batteries for winter ski trips in the Alps: diesel heater runs every night, short winter days. Shows how AGM depth-of-discharge limits and a PWM controller affect the result.',
   );
-  d.battery = { module: lib(BATTERY_MODULES, 'victron-agm-12-110'), series: 1, parallel: 2, dodPct: 50, autonomyTargetDays: 2 };
+  d.battery = {
+    module: lib(BATTERY_MODULES, 'victron-agm-12-110'),
+    series: 1,
+    parallel: 2,
+    dodPct: 50,
+    autonomyTargetDays: 2,
+  };
   d.solar = {
     ...d.solar,
     panel: lib(SOLAR_PANELS, 'renogy-rng-175d-175w-12v-mono'),
@@ -99,8 +129,19 @@ export function winterAgmVan(): Design {
   };
   delete d.solar.controller;
   d.inverter = { ...d.inverter, enabled: false };
-  d.charging.alternator = { ...d.charging.alternator, dcdc: lib(DCDC_CHARGERS, 'victron-orion-tr-smart-12-12-18-iso'), drivingHoursPerDay: 2, drivingDaysPerWeek: 2 };
-  d.charging.shore = { ...d.charging.shore, enabled: true, charger: lib(AC_CHARGERS, 'victron-ip22-12-15'), hoursPerDay: 12, daysPerWeek: 1 };
+  d.charging.alternator = {
+    ...d.charging.alternator,
+    dcdc: lib(DCDC_CHARGERS, 'victron-orion-tr-smart-12-12-18-iso'),
+    drivingHoursPerDay: 2,
+    drivingDaysPerWeek: 2,
+  };
+  d.charging.shore = {
+    ...d.charging.shore,
+    enabled: true,
+    charger: lib(AC_CHARGERS, 'victron-ip22-12-15'),
+    hoursPerDay: 12,
+    daysPerWeek: 1,
+  };
   d.appliances = apps('wa', [
     ['webasto-air-top-2000-stc', { hoursPerDay: 10 }],
     ['dometic-crx-50'],
@@ -120,7 +161,13 @@ export function electricMotorhome48(): Design {
     'Larger motorhome cooking entirely on electricity (induction hob, kettle, microwave, coffee) with a 3 kVA inverter/charger. 940 W of solar in two series strings. 12 V loads run from a 48→12 V converter (not modelled).',
   );
   d.systemVoltage = 48;
-  d.battery = { module: lib(BATTERY_MODULES, 'victron-lfp-ng-48-100'), series: 1, parallel: 2, dodPct: 80, autonomyTargetDays: 2 };
+  d.battery = {
+    module: lib(BATTERY_MODULES, 'victron-lfp-ng-48-100'),
+    series: 1,
+    parallel: 2,
+    dodPct: 80,
+    autonomyTargetDays: 2,
+  };
   d.solar = {
     ...d.solar,
     panel: lib(SOLAR_PANELS, 'victron-bluesolar-mono-235w'),
@@ -130,9 +177,21 @@ export function electricMotorhome48(): Design {
     controller: lib(MPPT_CONTROLLERS, 'victron-smartsolar-150-35'),
   };
   const mp = lib(INVERTER_MODELS, 'victron-multiplus-ii-48-3000-35');
-  d.inverter = { enabled: true, model: mp, averageEfficiencyPct: mp.maxEfficiencyPct - 5, onHoursPerDay: 14, sizingMarginPct: 25 };
+  d.inverter = {
+    enabled: true,
+    model: mp,
+    averageEfficiencyPct: mp.maxEfficiencyPct - 5,
+    onHoursPerDay: 14,
+    sizingMarginPct: 25,
+  };
   d.charging.alternator = { ...d.charging.alternator, enabled: false };
-  d.charging.shore = { ...d.charging.shore, enabled: true, useInverterCharger: true, hoursPerDay: 10, daysPerWeek: 1 };
+  d.charging.shore = {
+    ...d.charging.shore,
+    enabled: true,
+    useInverterCharger: true,
+    hoursPerDay: 10,
+    daysPerWeek: 1,
+  };
   d.appliances = apps('em', [
     ['tefal-ih210840', { hoursPerDay: 1 }],
     ['russell-hobbs-23840', { quantity: 1, hoursPerDay: 0.25 }],

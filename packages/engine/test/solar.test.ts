@@ -13,7 +13,12 @@ import {
 } from '../src';
 
 const flatLoc: IrradianceLocation = {
-  id: 't', name: 'T', country: 'X', lat: 50, lon: 0, database: 'test',
+  id: 't',
+  name: 'T',
+  country: 'X',
+  lat: 50,
+  lon: 0,
+  database: 'test',
   horizontal: [1, 2, 3, 4, 5, 6, 6, 5, 4, 3, 2, 1],
   tilted: [2, 3, 4, 5, 5, 5, 5, 5, 5, 4, 3, 2],
   source: { title: 't', url: 'https://example.com' },
@@ -22,7 +27,12 @@ const flatLoc: IrradianceLocation = {
 function config(over: Partial<SolarConfig> = {}): SolarConfig {
   return {
     ...createDesign().solar,
-    shadingLossPct: 0, orientationLossPct: 0, temperatureLossPct: 0, soilingLossPct: 0, reflectionLossPct: 0, wiringLossPct: 0,
+    shadingLossPct: 0,
+    orientationLossPct: 0,
+    temperatureLossPct: 0,
+    soilingLossPct: 0,
+    reflectionLossPct: 0,
+    wiringLossPct: 0,
     controllerEfficiencyPct: 100,
     ...over,
   };
@@ -39,7 +49,10 @@ describe('pwmFactor', () => {
 
 describe('solarLosses', () => {
   it('multiplies every loss factor', () => {
-    const l = solarLosses(config({ shadingLossPct: 10, temperatureLossPct: 10, controllerEfficiencyPct: 98 }), 12);
+    const l = solarLosses(
+      config({ shadingLossPct: 10, temperatureLossPct: 10, controllerEfficiencyPct: 98 }),
+      12,
+    );
     expect(l.overall).toBeCloseTo(0.9 * 0.9 * 0.98, 9);
     expect(l.pwm).toBe(1);
   });
@@ -53,8 +66,8 @@ describe('analyseSolar', () => {
     expect(r.monthly[0]!.whPerDay).toBeCloseTo(380, 6);
     expect(r.monthly[5]!.whPerDay).toBeCloseTo(2280, 6);
     expect(r.worstMonth.month).toBe(1);
-    expect(r.summerWhPerDay).toBeCloseTo(380 * (6 + 6 + 5) / 3, 6);
-    expect(r.winterWhPerDay).toBeCloseTo(380 * (1 + 1 + 2) / 3, 6);
+    expect(r.summerWhPerDay).toBeCloseTo((380 * (6 + 6 + 5)) / 3, 6);
+    expect(r.winterWhPerDay).toBeCloseTo((380 * (1 + 1 + 2)) / 3, 6);
     expect(r.requiredWForWorstMonth).toBeCloseTo(500, 6);
   });
   it('uses the tilted data set when mounting is tilted', () => {
@@ -70,12 +83,19 @@ describe('analyseSolar', () => {
   it('agrees with PVGIS annual yield within 12 % for London using PVGIS-like losses', () => {
     const london = IRRADIANCE_LOCATIONS.find((l) => l.id === 'london')!;
     // PVGIS reports l_tg ≈ −5.25 %, reflection ≈ −4.7 %, spectral +1.7 %, plus 14 % system loss.
-    const c = config({ quantity: 1, temperatureLossPct: 5.25, reflectionLossPct: 3, wiringLossPct: 14 });
+    const c = config({
+      quantity: 1,
+      temperatureLossPct: 5.25,
+      reflectionLossPct: 3,
+      wiringLossPct: 14,
+    });
     c.panel = { ...c.panel, powerW: 1000 };
     const r = analyseSolar(c, london, 12, 0);
     const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     const annualKwh = r.monthly.reduce((t, m, i) => t + (m.whPerDay * days[i]!) / 1000, 0);
-    expect(Math.abs(annualKwh - london.pvgisFlatYieldKwhPerKwp!) / london.pvgisFlatYieldKwhPerKwp!).toBeLessThan(0.12);
+    expect(
+      Math.abs(annualKwh - london.pvgisFlatYieldKwhPerKwp!) / london.pvgisFlatYieldKwhPerKwp!,
+    ).toBeLessThan(0.12);
   });
 });
 

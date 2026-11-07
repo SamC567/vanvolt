@@ -128,9 +128,7 @@ export function loadDemand(
   let peakW = continuousW;
   for (const l of loads) {
     const surgeDelta = Math.max(0, l.surgeW - l.runningW);
-    const candidate = l.concurrent
-      ? continuousW + surgeDelta
-      : base + l.runningW + surgeDelta;
+    const candidate = l.concurrent ? continuousW + surgeDelta : base + l.runningW + surgeDelta;
     peakW = Math.max(peakW, candidate);
   }
   return { continuousW, peakW };

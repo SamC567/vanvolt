@@ -19,8 +19,17 @@ const t90 = CABLE_TABLES.ampacity.find((t) => t.insulationRatingC === 90)!;
 
 function run(over: Partial<CableRunInput> = {}): CableRunInput {
   return {
-    id: 'r', role: 'custom', name: 'Run', lengthM: 2, currentA: 50, voltageV: 12, maxDropPct: 3,
-    installation: 'free-air', bundledCount: 1, ambientC: 30, ...over,
+    id: 'r',
+    role: 'custom',
+    name: 'Run',
+    lengthM: 2,
+    currentA: 50,
+    voltageV: 12,
+    maxDropPct: 3,
+    installation: 'free-air',
+    bundledCount: 1,
+    ambientC: 30,
+    ...over,
   };
 }
 const opts = { conductorTempC: 20, insulationRatingC: 90 };

@@ -22,4 +22,9 @@ export function appliance(overrides: Partial<Appliance> = {}): Appliance {
   };
 }
 
-export const NO_INVERTER = { enabled: false, averageEfficiencyPct: 100, idleW: 0, onHoursPerDay: 0 };
+export const NO_INVERTER = {
+  enabled: false,
+  averageEfficiencyPct: 100,
+  idleW: 0,
+  onHoursPerDay: 0,
+};

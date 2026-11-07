@@ -8,7 +8,8 @@ import type { Chemistry, Provenance, SourceRef } from '../types';
 const ACCESSED = '2026-11-07';
 
 export const VICTRON_LFP_EFFICIENCY: SourceRef = {
-  title: 'Victron 12,8 & 25,6 V LiFePO4 Smart datasheet — "round-trip energy efficiency of the average lead-acid battery is 80 %… of a LFP battery is 92 %"',
+  title:
+    'Victron 12,8 & 25,6 V LiFePO4 Smart datasheet — "round-trip energy efficiency of the average lead-acid battery is 80 %… of a LFP battery is 92 %"',
   url: 'https://www.victronenergy.com/upload/documents/Datasheet-12,8-&-25,6-Volt-lithium-iron-phosphate-batteries-Smart-EN.pdf',
   publisher: 'Victron Energy',
   accessed: ACCESSED,
@@ -90,7 +91,8 @@ export const CHEMISTRIES: Record<Chemistry, ChemistryParams> = {
     fallbackMaxDischargeC: 0.5,
     minChargeTempC: -10,
     taperStartSoc: 0.8,
-    notes: 'Better cycle life than AGM at the same depth of discharge, lower high-current performance.',
+    notes:
+      'Better cycle life than AGM at the same depth of discharge, lower high-current performance.',
     sources: [VICTRON_LFP_EFFICIENCY, VICTRON_PEUKERT, VICTRON_LEAD_DOD],
   },
   flooded: {
@@ -107,7 +109,8 @@ export const CHEMISTRIES: Record<Chemistry, ChemistryParams> = {
     fallbackMaxDischargeC: 0.5,
     minChargeTempC: -10,
     taperStartSoc: 0.8,
-    notes: 'Needs ventilation (hydrogen gassing) and periodic topping-up. Not recommended inside living space.',
+    notes:
+      'Needs ventilation (hydrogen gassing) and periodic topping-up. Not recommended inside living space.',
     sources: [VICTRON_LFP_EFFICIENCY, VICTRON_PEUKERT, VICTRON_LEAD_DOD],
   },
 };
@@ -118,7 +121,10 @@ export const PARAMETER_PROVENANCE: Record<string, { provenance: Provenance; note
     provenance: 'assumption',
     note: 'LiFePO4 80 % matches the DoD at which Victron rates cycle life; lead-acid 50 % follows Victron guidance.',
   },
-  chargeEfficiencyPct: { provenance: 'manufacturer', note: 'Victron: LFP 92 %, average lead-acid 80 % round-trip.' },
+  chargeEfficiencyPct: {
+    provenance: 'manufacturer',
+    note: 'Victron: LFP 92 %, average lead-acid 80 % round-trip.',
+  },
   peukertExponent: {
     provenance: 'manufacturer',
     note: 'Lead-acid uses Victron’s battery-monitor default of 1.25. LiFePO4 uses 1.05 (VanVolt assumption). Use your battery’s own value if published.',

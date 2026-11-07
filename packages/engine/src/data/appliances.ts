@@ -8,7 +8,9 @@
  */
 import type { Appliance, SourceRef } from '../types';
 
-export type AppliancePreset = Omit<Appliance, 'id' | 'enabled' | 'libraryId'> & { presetId: string };
+export type AppliancePreset = Omit<Appliance, 'id' | 'enabled' | 'libraryId'> & {
+  presetId: string;
+};
 
 const ACCESSED = '2026-11-07';
 const src = (
@@ -253,7 +255,13 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     concurrent: true,
     profile: 'daytime',
     provenance: 'manufacturer',
-    source: src('Fiamma Kit Turbo-Vent F (36 W, 0.3–3.0 A)', 'https://www.fiamma.it/en/product/kit-turbo-vent-f/', 'Fiamma', 'Manufacturer page blocks automated checks.', 'secondary'),
+    source: src(
+      'Fiamma Kit Turbo-Vent F (36 W, 0.3–3.0 A)',
+      'https://www.fiamma.it/en/product/kit-turbo-vent-f/',
+      'Fiamma',
+      'Manufacturer page blocks automated checks.',
+      'secondary',
+    ),
     notes: '36 W is the maximum speed. The 50 % duty cycle approximates mixed-speed use.',
   },
   /* Water ------------------------------------------------------------ */
@@ -296,7 +304,13 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     concurrent: true,
     profile: 'morning',
     provenance: 'manufacturer',
-    source: src('Fiamma Aqua 8F 10L (2.7 A)', 'https://www.fiamma.it/en/product/aqua-8f-10l/', 'Fiamma', 'Manufacturer page blocks automated checks.', 'secondary'),
+    source: src(
+      'Fiamma Aqua 8F 10L (2.7 A)',
+      'https://www.fiamma.it/en/product/aqua-8f-10l/',
+      'Fiamma',
+      'Manufacturer page blocks automated checks.',
+      'secondary',
+    ),
   },
   /* Communications --------------------------------------------------- */
   {
@@ -457,7 +471,11 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     concurrent: false,
     profile: 'morning',
     provenance: 'manufacturer',
-    source: src('Russell Hobbs Travel Kettle 23840 (1000 W)', 'https://uk.russellhobbs.com/travel-kettle-23840', 'Russell Hobbs'),
+    source: src(
+      'Russell Hobbs Travel Kettle 23840 (1000 W)',
+      'https://uk.russellhobbs.com/travel-kettle-23840',
+      'Russell Hobbs',
+    ),
   },
   {
     presetId: 'nespresso-essenza-mini',
@@ -522,7 +540,11 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     concurrent: false,
     profile: 'morning',
     provenance: 'manufacturer',
-    source: src('Philips EssentialCare Compact BHC010/10 (1200 W)', 'https://www.philips.co.uk/c-p/BHC010_10/essentialcare-dryer', 'Philips'),
+    source: src(
+      'Philips EssentialCare Compact BHC010/10 (1200 W)',
+      'https://www.philips.co.uk/c-p/BHC010_10/essentialcare-dryer',
+      'Philips',
+    ),
   },
   /* Generic estimates ------------------------------------------------ */
   {
@@ -578,7 +600,8 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     profile: 'morning',
     provenance: 'estimate',
     source: MOTOR_INRUSH_SOURCE,
-    notes: 'Generic estimate. Surge assumes 3× running power; motor starting currents can be several times higher.',
+    notes:
+      'Generic estimate. Surge assumes 3× running power; motor starting currents can be several times higher.',
   },
   {
     presetId: 'custom-dc',

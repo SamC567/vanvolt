@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="VanVolt — independent campervan electrical design and simulation" />
+    <meta
+      name="description"
+      content="VanVolt — independent campervan electrical design and simulation"
+    />
     <meta name="theme-color" content="#0b0b0b" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>VanVolt</title>
@@ -12,7 +15,9 @@
       try {
         var s = JSON.parse(localStorage.getItem('vanvolt-store') || '{}');
         var t = (s.state && s.state.theme) || 'system';
-        var dark = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        var dark =
+          t === 'dark' ||
+          (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
         if (dark) document.documentElement.classList.add('dark');
       } catch (e) {}
     </script>
