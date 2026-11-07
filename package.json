@@ -24,7 +24,7 @@
     "examples": "vite-node scripts/export-examples.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test:hooks": "node --test .claude/hooks/"
+    "test:hooks": "node --test .claude/hooks/*.test.mjs"
   },
   "engines": {
     "node": ">=20.19"

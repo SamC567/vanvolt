@@ -95,5 +95,5 @@ Projects are stored only in your browser (`localStorage`). Use _Projects → Exp
 
 ## Licence
 
-No licence has been chosen yet. Until one is added, all rights are reserved by the
-repository owner.
+[MIT](LICENSE). Product names and trademarks belong to their owners; datasheet values are
+cited for reference and remain the property of the respective manufacturers.

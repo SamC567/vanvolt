@@ -4,6 +4,7 @@ node_modules/
 # Build output
 dist/
 build/
+!.claude/skills/build/
 *.tsbuildinfo
 coverage/
 
@@ -30,3 +31,7 @@ Thumbs.db
 test-results/
 playwright-report/
 screenshots-tmp/
+
+# Claude Code local state
+.claude/.cache/
+.claude/settings.local.json
