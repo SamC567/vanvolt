@@ -1,0 +1,23 @@
+{
+  "name": "vanvolt",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Independent campervan electrical design and simulation platform",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @vanvolt/web",
+    "build": "npm run build -w @vanvolt/web",
+    "preview": "npm run preview -w @vanvolt/web",
+    "test": "npm run test -w @vanvolt/engine && npm run test -w @vanvolt/web",
+    "test:engine": "npm run test -w @vanvolt/engine",
+    "typecheck": "npm run typecheck -w @vanvolt/engine && npm run typecheck -w @vanvolt/web",
+    "check": "npm run typecheck && npm test && npm run build"
+  },
+  "engines": {
+    "node": ">=20.19"
+  }
+}
