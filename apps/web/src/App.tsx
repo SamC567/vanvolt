@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, type ComponentType } from 'react';
 import { Shell } from './components/layout';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { useRoute, type Route } from './lib/router';
 import { useThemeEffect } from './lib/theme';
 import { useStore } from './store/designStore';
@@ -59,10 +60,14 @@ export function App() {
   const route = useRoute();
   const Page = PAGES[route];
   return (
-    <Shell route={route}>
-      <Suspense fallback={<p className="text-sm text-ink3">Loading…</p>}>
-        <Page />
-      </Suspense>
-    </Shell>
+    <ErrorBoundary>
+      <Shell route={route}>
+        <ErrorBoundary key={route}>
+          <Suspense fallback={<p className="text-sm text-ink3">Loading…</p>}>
+            <Page />
+          </Suspense>
+        </ErrorBoundary>
+      </Shell>
+    </ErrorBoundary>
   );
 }

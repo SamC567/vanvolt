@@ -5,6 +5,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import {
+  analyseDesign,
   createDesign,
   deepClone,
   duplicateDesign,
@@ -12,7 +13,7 @@ import {
   uid,
   type Design,
 } from '@vanvolt/engine';
-import { migrateDesign } from './migrate';
+import { isSafeId, migrateDesign } from './migrate';
 
 export type ThemePref = 'light' | 'dark' | 'system';
 
@@ -175,7 +176,8 @@ export const useStore = create<StoreState>()(
       },
 
       importDesign: (raw) => {
-        const d = migrateDesign(raw);
+        const d = migrateDesign(raw, { imported: true });
+        analyseDesign(d); // throws on designs the engine cannot handle — reject before saving
         const existing = get().designs[d.id];
         const design = existing ? { ...d, id: uid('design'), name: `${d.name} (imported)` } : d;
         set((s) => ({
@@ -244,13 +246,20 @@ export const useStore = create<StoreState>()(
       merge: (persisted, current) => {
         const p = (persisted ?? {}) as Partial<StoreState>;
         if (!p.designs || !p.order || p.order.length === 0) return current;
-        const designs: Record<string, Design> = {};
+        // Null-prototype map: ids from storage can never touch Object.prototype.
+        const designs = Object.create(null) as Record<string, Design>;
         for (const id of p.order) {
+          if (!isSafeId(id)) continue;
           try {
-            const d = p.designs[id];
-            if (d) designs[id] = migrateDesign(d);
+            const d = Object.prototype.hasOwnProperty.call(p.designs, id)
+              ? p.designs[id]
+              : undefined;
+            if (!d) continue;
+            const m = migrateDesign(d);
+            analyseDesign(m); // skip designs that would crash the app on every load
+            designs[id] = { ...m, id };
           } catch {
-            /* skip corrupt entries */
+            /* skip corrupt entries rather than locking the user out */
           }
         }
         const order = p.order.filter((id) => designs[id]);

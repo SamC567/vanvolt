@@ -607,7 +607,7 @@ export function analyseDesign(design: Design): SystemAnalysis {
     );
 
   /* Simulation ------------------------------------------------------- */
-  const month = Math.min(12, Math.max(1, Math.round(design.simulation.month)));
+  const month = Math.min(12, Math.max(1, Math.round(design.simulation.month) || 1));
   const altSrc = charging.sources.find((s) => s.id === 'alternator')!;
   const shoreSrc = charging.sources.find((s) => s.id === 'shore')!;
   const simulation = simulate({

@@ -11,7 +11,7 @@ Planning tool: it must never present guesses as facts.
 - `apps/web/` — React 19 + Vite + Tailwind 3 UI. Pages in `src/pages/`, Zustand store with
   localStorage persistence in `src/store/`, PDF report in `src/report/`.
 - `docs/` — `ARCHITECTURE.md`, `CALCULATIONS.md` (every formula), `WORKFLOW.md` (how we work).
-- `.claude/` — agents, skills, hooks. Usage guide: `docs/AI-WORKFLOW.md`.
+- `.claude/` — specialist agents, skills (`/build`, `/review`, `/test`…) and safety hooks.
 
 ## Commands
 

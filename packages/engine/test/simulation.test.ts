@@ -113,4 +113,8 @@ describe('simulate', () => {
     expect(r.steps[10]!.alternatorW).toBe(400);
     expect(r.endSocPct).toBeCloseTo(20 + (400 * 0.9 * 100) / 2000, 6);
   });
+  it('caps the number of simulated days', () => {
+    expect(simulate(inputs({ days: 1e9 })).steps).toHaveLength(60 * 24);
+    expect(simulate(inputs({ days: Number.NaN })).steps).toHaveLength(24);
+  });
 });

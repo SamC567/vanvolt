@@ -53,4 +53,40 @@ describe('design store', () => {
     for (const id of useStore.getState().order) useStore.getState().toggleCompare(id);
     expect(useStore.getState().compareIds.length).toBe(4);
   });
+
+  it('skips saved designs that would crash the app and keeps the rest', async () => {
+    const good = useStore.getState().active();
+    const bad = {
+      ...JSON.parse(JSON.stringify(good)),
+      id: 'bad-design',
+      appliances: [{ powerW: 1 }],
+      battery: 'oops',
+    };
+    localStorage.setItem(
+      'vanvolt-store',
+      JSON.stringify({
+        state: {
+          designs: { [good.id]: good, 'bad-design': bad, __proto__: good },
+          order: ['bad-design', good.id, '__proto__'],
+          activeId: 'bad-design',
+          theme: 'system',
+          compareIds: [],
+        },
+        version: 1,
+      }),
+    );
+    await useStore.persist.rehydrate();
+    const s = useStore.getState();
+    expect(s.order).toEqual([good.id]);
+    expect(s.activeId).toBe(good.id);
+    expect(Object.getPrototypeOf(s.designs)).toBeNull();
+  });
+
+  it('rejects imports the engine cannot analyse', () => {
+    expect(() =>
+      useStore
+        .getState()
+        .importDesign({ appliances: [], battery: {}, solar: {}, schemaVersion: 2 }),
+    ).toThrow();
+  });
 });

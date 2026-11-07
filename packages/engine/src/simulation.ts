@@ -16,6 +16,9 @@
 import type { Appliance, UsageProfile } from './types';
 import { clamp, midMonthDayOfYear, pct, safe } from './units';
 
+/** Upper bound on simulated days (keeps memory and time bounded for any input). */
+export const MAX_SIMULATION_DAYS = 60;
+
 export const PROFILE_WINDOWS: Record<UsageProfile, [number, number]> = {
   allday: [0, 24],
   morning: [6, 10],
@@ -201,7 +204,7 @@ export function simulate(input: SimulationInputs): SimulationResult {
   let totalCharge = 0;
   let shortfallHours = 0;
   let firstEmpty: number | null = null;
-  const days = Math.max(1, Math.floor(input.days));
+  const days = Math.min(MAX_SIMULATION_DAYS, Math.max(1, Math.floor(input.days) || 1));
 
   for (let d = 0; d < days; d++) {
     for (let h = 0; h < 24; h++) {

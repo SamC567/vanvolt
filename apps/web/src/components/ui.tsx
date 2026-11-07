@@ -568,6 +568,16 @@ export function ProvenanceBadge({
   );
 }
 
+/** Parse a URL and accept only http(s) — data from imported designs is untrusted. */
+export function safeHttpUrl(raw: string): URL | null {
+  try {
+    const u = new URL(raw);
+    return u.protocol === 'https:' || u.protocol === 'http:' ? u : null;
+  } catch {
+    return null;
+  }
+}
+
 export function SourceLink({
   source,
   compact,
@@ -576,10 +586,20 @@ export function SourceLink({
   compact?: boolean;
 }) {
   if (!source || !source.url) return null;
+  const url = safeHttpUrl(source.url);
+  if (!url)
+    return (
+      <span
+        className="text-xs text-ink3"
+        title="Link hidden: only http(s) addresses are shown as links"
+      >
+        {source.title} (unsupported link)
+      </span>
+    );
   return (
     <span className="inline-flex flex-wrap items-center gap-1.5 text-xs">
       <a
-        href={source.url}
+        href={url.href}
         target="_blank"
         rel="noreferrer noopener"
         className="inline-flex items-center gap-1 text-accent hover:underline"
@@ -588,6 +608,7 @@ export function SourceLink({
         <ExternalLink size={12} />
         {compact ? 'Source' : source.title}
       </a>
+      {!compact && <span className="text-ink3">{url.hostname}</span>}
       {source.verification === 'document' ? (
         <span
           className="rounded bg-surface2 px-1 text-[10px] text-ink2"

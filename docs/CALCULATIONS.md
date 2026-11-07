@@ -145,6 +145,7 @@ Fuse rating:
   (Cooper / PVEducation).
 - Loads: daily energy is spread evenly over the usage window (morning 06–10, daytime 10–17,
   evening 17–23, night 22–06, or all day).
+- The simulation is limited to 60 days so any input stays fast.
 - Each hour, chargers supply loads directly. Any surplus charges the battery, limited by the
   maximum charge current, the taper above 95 % SoC (LiFePO4) or 80 % SoC (lead-acid), and
   round-trip efficiency. Any deficit discharges the battery down to the DoD floor; anything
