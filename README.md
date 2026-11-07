@@ -93,6 +93,22 @@ Every source also carries a verification status:
 
 Projects are stored only in your browser (`localStorage`). Use _Projects → Export_ to back up.
 
+## Security and privacy
+
+- No server, no account, no tracking: everything runs and is stored in your browser.
+- Imported design files are treated as untrusted. Every field is validated, lists are capped,
+  only `http(s)` links are shown, and an imported file cannot mark its own data as "verified".
+- A design that cannot be displayed is isolated by an error boundary instead of breaking the app.
+- `npm audit --omit=dev` reports no known vulnerabilities in shipped dependencies.
+
+## Working on VanVolt with Claude Code
+
+The repo includes a Claude Code setup: [`CLAUDE.md`](CLAUDE.md) (project rules),
+[`docs/WORKFLOW.md`](docs/WORKFLOW.md) (9-step workflow), specialist agents and skills in
+`.claude/` (`/build`, `/research`, `/review`, `/test`, `/debug`, `/security-audit`, `/optimise`,
+`/architect`, `/release`, `/progress-report`), and safety hooks that block force-pushes,
+merges, publishing, deploys and secret access.
+
 ## Licence
 
 [MIT](LICENSE). Product names and trademarks belong to their owners; datasheet values are

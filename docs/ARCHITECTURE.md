@@ -91,6 +91,6 @@ that the UI and PDF report display verbatim.
 | M2  | Researched reference data          | Component library, appliances, irradiance, cable tables with source links |
 | M3  | Web UI core                        | Shell, themes, persistence, projects, all designer pages live             |
 | M4  | Diagram, comparison, PDF, examples | Interactive diagram, compare view, PDF export, example designs            |
-| M5  | Verification and docs              | Browser checks, code review, final docs                                   |
+| M5  | Verification and docs              | Browser checks, security-audit fixes, final docs                          |
 
 Each milestone: run tests → fix → verify UI → update docs → commit → push.
