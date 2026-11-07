@@ -12,15 +12,15 @@ export const VICTRON_LFP_EFFICIENCY: SourceRef = {
   url: 'https://www.victronenergy.com/upload/documents/Datasheet-12,8-&-25,6-Volt-lithium-iron-phosphate-batteries-Smart-EN.pdf',
   publisher: 'Victron Energy',
   accessed: ACCESSED,
-  verification: 'secondary',
+  verification: 'document',
 };
 
 export const VICTRON_PEUKERT: SourceRef = {
-  title: 'Victron SmartShunt manual — Peukert exponent setting (default 1.25 for lead-acid; lithium ≈ 1.01–1.05)',
+  title: 'Victron SmartShunt manual — Peukert exponent setting (default 1.25, range 1.00–1.50)',
   url: 'https://www.victronenergy.com/media/pg/SmartShunt/en/all-features-and-settings.html',
   publisher: 'Victron Energy',
   accessed: ACCESSED,
-  verification: 'secondary',
+  verification: 'document',
 };
 
 export const VICTRON_LEAD_DOD: SourceRef = {
@@ -28,7 +28,7 @@ export const VICTRON_LEAD_DOD: SourceRef = {
   url: 'https://www.victronenergy.com/media/pg/BMV-700/en/all-features-and-settings.html',
   publisher: 'Victron Energy',
   accessed: ACCESSED,
-  verification: 'secondary',
+  verification: 'document',
 };
 
 export const VICTRON_LFP_CYCLES: SourceRef = {
@@ -36,7 +36,7 @@ export const VICTRON_LFP_CYCLES: SourceRef = {
   url: 'https://www.victronenergy.com/media/pg/Lithium_Battery_Smart/en/technical-data.html',
   publisher: 'Victron Energy',
   accessed: ACCESSED,
-  verification: 'secondary',
+  verification: 'document',
 };
 
 export const CHEMISTRIES: Record<Chemistry, ChemistryParams> = {
@@ -121,7 +121,7 @@ export const PARAMETER_PROVENANCE: Record<string, { provenance: Provenance; note
   chargeEfficiencyPct: { provenance: 'manufacturer', note: 'Victron: LFP 92 %, average lead-acid 80 % round-trip.' },
   peukertExponent: {
     provenance: 'manufacturer',
-    note: 'Victron battery-monitor default 1.25 for lead-acid; 1.05 used for LiFePO4. Use your battery’s own value if published.',
+    note: 'Lead-acid uses Victron’s battery-monitor default of 1.25. LiFePO4 uses 1.05 (VanVolt assumption). Use your battery’s own value if published.',
   },
   minVoltagePer12V: {
     provenance: 'assumption',

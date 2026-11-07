@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Design tokens. Chart series and status colours follow the validated reference
+ * palette (dataviz skill): fixed categorical order, separate dark steps.
+ */
+:root {
+  color-scheme: light;
+  --bg: #f4f4f2;
+  --surface: #fcfcfb;
+  --surface-2: #f0efec;
+  --surface-3: #e7e6e2;
+  --border: #e1e0db;
+  --text: #0b0b0b;
+  --text-2: #52514e;
+  --text-3: #85847e;
+  --accent: #2a78d6;
+  --accent-soft: #e3eefb;
+  --series-1: #2a78d6; /* blue  — alternator */
+  --series-2: #eb6834; /* orange — solar */
+  --series-3: #1baf7a; /* aqua  — shore */
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-7: #6250d6;
+  --good: #0ca30c;
+  --warn: #fab219;
+  --serious: #ec835a;
+  --crit: #d03b3b;
+  --grid: #e7e6e2;
+  /* RGB channels for Tailwind opacity modifiers */
+  --c-bg: 244 244 242;
+  --c-surface: 252 252 251;
+  --c-surface-2: 240 239 236;
+  --c-surface-3: 231 230 226;
+  --c-border: 225 224 219;
+  --c-text: 11 11 11;
+  --c-text-2: 82 81 78;
+  --c-text-3: 133 132 126;
+  --c-accent: 42 120 214;
+  --c-accent-soft: 227 238 251;
+  --c-good: 12 163 12;
+  --c-warn: 250 178 25;
+  --c-serious: 236 131 90;
+  --c-crit: 208 59 59;
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: #121211;
+  --surface: #1a1a19;
+  --surface-2: #232321;
+  --surface-3: #2d2d2a;
+  --border: #33332f;
+  --text: #f0efec;
+  --text-2: #c3c2b7;
+  --text-3: #8f8e86;
+  --accent: #3987e5;
+  --accent-soft: #1b2b40;
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-7: #9085e9;
+  --grid: #2d2d2a;
+  --c-bg: 18 18 17;
+  --c-surface: 26 26 25;
+  --c-surface-2: 35 35 33;
+  --c-surface-3: 45 45 42;
+  --c-border: 51 51 47;
+  --c-text: 240 239 236;
+  --c-text-2: 195 194 183;
+  --c-text-3: 143 142 134;
+  --c-accent: 57 135 229;
+  --c-accent-soft: 27 43 64;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-bg text-ink antialiased;
+  font-feature-settings: 'cv11', 'ss01', 'tnum';
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-line bg-surface shadow-card;
+  }
+  .input {
+    @apply w-full rounded-lg border border-line bg-surface px-2.5 py-1.5 text-sm text-ink outline-none transition
+      focus:border-accent focus:ring-2 focus:ring-accent/25 disabled:opacity-60;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg border border-line bg-surface px-3 py-1.5 text-sm font-medium text-ink
+      transition hover:bg-surface2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply border-transparent bg-accent text-white hover:brightness-110;
+  }
+  .btn-ghost {
+    @apply border-transparent bg-transparent hover:bg-surface2;
+  }
+  .label {
+    @apply mb-1 block text-xs font-medium text-ink2;
+  }
+  .table-base {
+    @apply w-full text-sm;
+  }
+  .table-base th {
+    @apply whitespace-nowrap border-b border-line px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-ink3;
+  }
+  .table-base td {
+    @apply border-b border-line px-3 py-2 align-middle;
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* React Flow theming */
+.react-flow__attribution {
+  display: none;
+}
+.react-flow__controls button {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+  fill: var(--text);
+}
+.react-flow__controls button:hover {
+  background: var(--surface-2);
+}
+.react-flow__edge-text {
+  fill: var(--text-2);
+}
+
+@keyframes vv-dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+.vv-flow {
+  stroke-dasharray: 6 6;
+  animation: vv-dash 0.8s linear infinite;
+}
+.vv-flow-reverse {
+  stroke-dasharray: 6 6;
+  animation: vv-dash 0.8s linear infinite reverse;
+}
+@media (prefers-reduced-motion: reduce) {
+  .vv-flow,
+  .vv-flow-reverse {
+    animation: none;
+  }
+}
+
+input[type='range'] {
+  accent-color: var(--accent);
+}

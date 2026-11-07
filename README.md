@@ -57,6 +57,20 @@ Then open http://localhost:5173 in your browser.
 | `npm run preview` | Serve the production build at http://localhost:4173 |
 | `npm run check` | Typecheck, test and build in one go |
 
+## Example designs
+
+Four worked examples are built into the app (Projects → Example designs) and also exported to
+[`examples/`](examples) as JSON files you can import:
+
+| File | Design |
+| --- | --- |
+| `weekend-van.vanvolt.json` | 12 V, 200 Ah LiFePO4 weekend van, 380 W flat solar, 30 A DC-DC |
+| `full-time.vanvolt.json` | 12 V, 400 Ah LiFePO4 full-time remote-working van in Lisbon, Starlink, induction |
+| `winter-agm.vanvolt.json` | 12 V, 220 Ah AGM budget ski van in Munich in winter, PWM controller |
+| `48v-motorhome.vanvolt.json` | 48 V, 10 kWh all-electric motorhome with a 3 kVA inverter/charger |
+
+Regenerate them with `npm run examples`.
+
 ## Documentation
 
 - [Architecture and implementation plan](docs/ARCHITECTURE.md)
@@ -66,7 +80,18 @@ Then open http://localhost:5173 in your browser.
 
 VanVolt distinguishes between **manufacturer data**, **standards / reference data**,
 **user inputs**, **engineering assumptions** and **calculated estimates**. Each is labelled
-in the interface and in the PDF report, with links to sources.
+in the interface and in the PDF report, with links to sources (see *Data & sources* in the app).
+
+Every source also carries a verification status:
+
+- **verified**: the value was checked against the cited document (all Victron components,
+  PVGIS irradiance, panel datasheets, IEC 60228 and ISO 10133 tables, most appliances).
+- **secondary**: the value was reported from the cited source but the document could not be
+  opened for checking, usually because the manufacturer site blocks automated access. This
+  applies to the fuse families, the bundling factors and a few appliances. Check these on the
+  datasheet before relying on them.
+
+Projects are stored only in your browser (`localStorage`). Use *Projects → Export* to back up.
 
 ## Licence
 

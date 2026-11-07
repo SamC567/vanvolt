@@ -11,12 +11,18 @@ import type { Appliance, SourceRef } from '../types';
 export type AppliancePreset = Omit<Appliance, 'id' | 'enabled' | 'libraryId'> & { presetId: string };
 
 const ACCESSED = '2026-11-07';
-const src = (title: string, url: string, publisher: string, note?: string): SourceRef => ({
+const src = (
+  title: string,
+  url: string,
+  publisher: string,
+  note?: string,
+  verification: 'document' | 'secondary' = 'document',
+): SourceRef => ({
   title,
   url,
   publisher,
   accessed: ACCESSED,
-  verification: 'secondary',
+  verification,
   ...(note ? { note } : {}),
 });
 
@@ -37,7 +43,7 @@ export const MSW_SOURCE: SourceRef = {
 };
 
 const DOMETIC_NOTE =
-  'Average power derived from the stated daily energy; surge is the rated (maximum) DC current × 12 V. Real consumption depends strongly on ambient temperature, set-point and use.';
+  'Average power derived from the stated energy consumption; surge is the rated (maximum) DC current × 12 V. Real consumption depends strongly on ambient temperature, set-point and use.';
 
 export const APPLIANCE_PRESETS: AppliancePreset[] = [
   /* Refrigeration ---------------------------------------------------- */
@@ -47,7 +53,7 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     category: 'refrigeration',
     supply: 'dc',
     kind: 'compressor',
-    powerW: 20.4,
+    powerW: 12.4,
     surgeW: 98.4,
     quantity: 1,
     hoursPerDay: 24,
@@ -58,7 +64,7 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     profile: 'allday',
     provenance: 'manufacturer',
     source: src(
-      'Dometic CFX3 45 product page (0.49 kWh/24 h DC at +5 °C inside / +25 °C ambient; 8.2 A rated)',
+      'Dometic CFX3 45 product page (1.03 Ah/h at 12 V DC, +32 °C ambient / +4 °C inside; 8.2 A rated)',
       'https://www.dometic.com/en/product/dometic-cfx3-45-9620009573',
       'Dometic',
     ),
@@ -70,7 +76,7 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     category: 'refrigeration',
     supply: 'dc',
     kind: 'compressor',
-    powerW: 19.6,
+    powerW: 11.8,
     surgeW: 90,
     quantity: 1,
     hoursPerDay: 24,
@@ -81,8 +87,8 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     profile: 'allday',
     provenance: 'manufacturer',
     source: src(
-      'Dometic CFX3 35 product page (0.47 kWh/24 h DC at +5/+25 °C; 7.5 A rated)',
-      'https://www.dometic.com/en-gb/outdoor/coolers/electric-coolboxes/cfx335-9600025325',
+      'Dometic CFX3 35 product page (0.98 Ah/h at 12 V DC, +32 °C ambient / +4 °C inside; 7.5 A rated)',
+      'https://www.dometic.com/en/product/dometic-cfx3-35-9620009572',
       'Dometic',
     ),
     notes: DOMETIC_NOTE,
@@ -104,10 +110,11 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     profile: 'allday',
     provenance: 'manufacturer',
     source: src(
-      'Dometic CRX50T product page (0.557 kWh/24 h DC at +5 °C inside / +32 °C ambient; 5 A rated)',
-      'https://www.dometic.com/en-us/outdoor/rv-and-van/refrigerators/camper-van-refrigerators/crx0050t-28603?v=9600026494',
+      'Dometic CoolMatic CRX 50 E product page (5 A rated DC current)',
+      'https://www.dometic.com/en/product/dometic-coolmatic-crx-50-e-9105306726',
       'Dometic',
-      'At +25 °C ambient Dometic lists 0.268 kWh/24 h. VanVolt uses the 32 °C figure (conservative).',
+      'The 5 A rating is confirmed. The 0.557 kWh/24 h (+32 °C ambient) energy figure came from a Dometic US CRX50T listing that is no longer online and could not be confirmed — check your fridge’s documentation.',
+      'secondary',
     ),
     notes: DOMETIC_NOTE,
   },
@@ -128,9 +135,11 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     profile: 'allday',
     provenance: 'manufacturer',
     source: src(
-      'Dometic CRX 65T (0.563 kWh/24 h DC at +5/+32 °C; CRX 65E 5.5 A rated)',
-      'https://www.dometic.com/en-us/outdoor/boat/boat-refrigerators/dometic-crx-65t-231420',
+      'Dometic CoolMatic CRX 65 product page (5.5 A rated DC current)',
+      'https://www.dometic.com/en/product/dometic-coolmatic-crx-65-9105306727',
       'Dometic',
+      'The 5.5 A rating is confirmed. The 0.563 kWh/24 h (+32 °C ambient) energy figure came from a Dometic CRX 65T listing that is no longer online and could not be confirmed.',
+      'secondary',
     ),
     notes: DOMETIC_NOTE,
   },
@@ -142,7 +151,7 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     supply: 'dc',
     kind: 'motor',
     powerW: 29,
-    surgeW: 75,
+    surgeW: 29,
     quantity: 1,
     hoursPerDay: 8,
     dutyCyclePct: 100,
@@ -152,15 +161,16 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     profile: 'night',
     provenance: 'manufacturer',
     source: src(
-      'Webasto Air Top 2000 STC (14–29 W operating; 75 W at start-up)',
+      'Webasto Air Top 2000 STC (power consumption 1.25–2.45 A, 14–29 W)',
       'https://www.webasto.com/en-us/heating/air-heaters/air-top-2000-stc.html',
       'Webasto',
+      'Start-up (glow-plug) power is not published on this page — surge left equal to running power. Webasto states production has stopped (successor: Air Top Pro 25).',
     ),
     notes: 'Uses the maximum operating power (29 W); at low output it draws about 14 W.',
   },
   {
-    presetId: 'eberspaecher-airtronic-s2-d2l',
-    name: 'Eberspächer Airtronic S2 D2L diesel heater',
+    presetId: 'eberspaecher-airtronic-s3-d2l',
+    name: 'Eberspächer Airtronic S3 Commercial D2L diesel heater',
     category: 'heating',
     supply: 'dc',
     kind: 'motor',
@@ -175,7 +185,7 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     profile: 'night',
     provenance: 'manufacturer',
     source: src(
-      'Eberspächer camping brochure (Airtronic S2 D2L: 6–28 W)',
+      'Eberspächer camping brochure (Airtronic S3 Commercial D2L: 6–28 W)',
       'https://www.eberspaecher.com/fileadmin/data/corporatesite/pdf/en/2_fuel_operated_heaters/gp/eberspaecher-brochure-camping-cars-en.pdf',
       'Eberspächer',
       'Start-up (glow-plug) power not published in this source — surge left equal to running power.',
@@ -243,7 +253,7 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     concurrent: true,
     profile: 'daytime',
     provenance: 'manufacturer',
-    source: src('Fiamma Kit Turbo-Vent F (36 W, 0.3–3.0 A)', 'https://www.fiamma.it/en/product/kit-turbo-vent-f/', 'Fiamma'),
+    source: src('Fiamma Kit Turbo-Vent F (36 W, 0.3–3.0 A)', 'https://www.fiamma.it/en/product/kit-turbo-vent-f/', 'Fiamma', 'Manufacturer page blocks automated checks.', 'secondary'),
     notes: '36 W is the maximum speed. The 50 % duty cycle approximates mixed-speed use.',
   },
   /* Water ------------------------------------------------------------ */
@@ -267,7 +277,7 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
       'Shurflo 2095-204 data sheet (1.5 A at 0 psi to 3.3 A at 20 psi; 10 A fuse)',
       'https://shurflo.eu/wp-content/uploads/2023/03/shurflo2095_204_412.pdf',
       'Shurflo (Pentair)',
-      'Product page quotes up to 4.5 A — size wiring for the higher figure.',
+      'Datasheet recommends a 10 A time-delay fuse.',
     ),
   },
   {
@@ -286,7 +296,7 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     concurrent: true,
     profile: 'morning',
     provenance: 'manufacturer',
-    source: src('Fiamma Aqua 8F 10L (2.7 A)', 'https://www.fiamma.it/en/product/aqua-8f-10l/', 'Fiamma'),
+    source: src('Fiamma Aqua 8F 10L (2.7 A)', 'https://www.fiamma.it/en/product/aqua-8f-10l/', 'Fiamma', 'Manufacturer page blocks automated checks.', 'secondary'),
   },
   /* Communications --------------------------------------------------- */
   {
@@ -296,7 +306,7 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     supply: 'dc',
     kind: 'electronic',
     powerW: 40,
-    surgeW: 40,
+    surgeW: 60,
     quantity: 1,
     hoursPerDay: 6,
     dutyCyclePct: 100,
@@ -306,7 +316,7 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     profile: 'evening',
     provenance: 'manufacturer',
     source: src(
-      'Starlink Mini specifications (25–40 W average; 12–48 V DC input)',
+      'Starlink Mini specifications (25–40 W average; input rating 12–48 V, 60 W max)',
       'https://starlink.com/public-files/specification_sheet_mini_x.pdf',
       'Starlink',
     ),
@@ -342,8 +352,8 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
     category: 'lighting',
     supply: 'dc',
     kind: 'lighting',
-    powerW: 4,
-    surgeW: 4,
+    powerW: 4.32,
+    surgeW: 4.32,
     quantity: 6,
     hoursPerDay: 4,
     dutyCyclePct: 100,
@@ -356,6 +366,8 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
       'Lumitec Orbit flush-mount LED down light (0.36 A at 12 V)',
       'https://www.lumiteclighting.com/orbit-flush-mount-led-down-light-8.html',
       'Lumitec',
+      'Power = 0.36 A × 12 V. Manufacturer page blocks automated checks.',
+      'secondary',
     ),
   },
   /* Electronics ------------------------------------------------------ */
@@ -489,7 +501,8 @@ export const APPLIANCE_PRESETS: AppliancePreset[] = [
       'Beko MOC20100 (700 W output, 1100 W rated input)',
       'https://www.beko.com/mu-en/products/freestanding-microwaves/freestanding-microwave-700-w-20-l-moc20100sfb',
       'Beko',
-      'An older manual lists 1200 W input. Microwave input power is well above the advertised output.',
+      'An older manual lists 1200 W input. Microwave input power is well above the advertised output. Manufacturer page blocks automated checks.',
+      'secondary',
     ),
   },
   /* Personal care ---------------------------------------------------- */

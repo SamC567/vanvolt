@@ -1,0 +1,401 @@
+{
+  "schemaVersion": 1,
+  "id": "example-winter-agm",
+  "name": "Winter ski van — 12 V, 220 Ah AGM (budget)",
+  "description": "Budget build on lead-acid batteries for winter ski trips in the Alps: diesel heater runs every night, short winter days. Shows how AGM depth-of-discharge limits and a PWM controller affect the result.",
+  "createdAt": "2026-11-07T00:00:00.000Z",
+  "updatedAt": "2026-11-07T00:00:00.000Z",
+  "systemVoltage": 12,
+  "appliances": [
+    {
+      "name": "Webasto Air Top 2000 STC diesel heater",
+      "category": "heating",
+      "supply": "dc",
+      "kind": "motor",
+      "powerW": 29,
+      "surgeW": 29,
+      "quantity": 1,
+      "hoursPerDay": 10,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "night",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Webasto Air Top 2000 STC (power consumption 1.25–2.45 A, 14–29 W)",
+        "url": "https://www.webasto.com/en-us/heating/air-heaters/air-top-2000-stc.html",
+        "publisher": "Webasto",
+        "accessed": "2026-11-07",
+        "verification": "document",
+        "note": "Start-up (glow-plug) power is not published on this page — surge left equal to running power. Webasto states production has stopped (successor: Air Top Pro 25)."
+      },
+      "notes": "Uses the maximum operating power (29 W); at low output it draws about 14 W.",
+      "id": "wa-app-1",
+      "enabled": true,
+      "libraryId": "webasto-air-top-2000-stc"
+    },
+    {
+      "name": "Dometic CRX 50 drawer-style fridge",
+      "category": "refrigeration",
+      "supply": "dc",
+      "kind": "compressor",
+      "powerW": 23.2,
+      "surgeW": 60,
+      "quantity": 1,
+      "hoursPerDay": 24,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "allday",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Dometic CoolMatic CRX 50 E product page (5 A rated DC current)",
+        "url": "https://www.dometic.com/en/product/dometic-coolmatic-crx-50-e-9105306726",
+        "publisher": "Dometic",
+        "accessed": "2026-11-07",
+        "verification": "secondary",
+        "note": "The 5 A rating is confirmed. The 0.557 kWh/24 h (+32 °C ambient) energy figure came from a Dometic US CRX50T listing that is no longer online and could not be confirmed — check your fridge’s documentation."
+      },
+      "notes": "Average power derived from the stated energy consumption; surge is the rated (maximum) DC current × 12 V. Real consumption depends strongly on ambient temperature, set-point and use.",
+      "id": "wa-app-2",
+      "enabled": true,
+      "libraryId": "dometic-crx-50"
+    },
+    {
+      "name": "Lumitec Orbit LED downlight",
+      "category": "lighting",
+      "supply": "dc",
+      "kind": "lighting",
+      "powerW": 4.32,
+      "surgeW": 4.32,
+      "quantity": 4,
+      "hoursPerDay": 6,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "evening",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Lumitec Orbit flush-mount LED down light (0.36 A at 12 V)",
+        "url": "https://www.lumiteclighting.com/orbit-flush-mount-led-down-light-8.html",
+        "publisher": "Lumitec",
+        "accessed": "2026-11-07",
+        "verification": "secondary",
+        "note": "Power = 0.36 A × 12 V. Manufacturer page blocks automated checks."
+      },
+      "id": "wa-app-3",
+      "enabled": true,
+      "libraryId": "lumitec-orbit"
+    },
+    {
+      "name": "Fiamma Aqua 8F 10L water pump",
+      "category": "water",
+      "supply": "dc",
+      "kind": "motor",
+      "powerW": 32.4,
+      "surgeW": 32.4,
+      "quantity": 1,
+      "hoursPerDay": 0.25,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "morning",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Fiamma Aqua 8F 10L (2.7 A)",
+        "url": "https://www.fiamma.it/en/product/aqua-8f-10l/",
+        "publisher": "Fiamma",
+        "accessed": "2026-11-07",
+        "verification": "secondary",
+        "note": "Manufacturer page blocks automated checks."
+      },
+      "id": "wa-app-4",
+      "enabled": true,
+      "libraryId": "fiamma-aqua-8f-10l"
+    },
+    {
+      "name": "USB device charging (generic 12 V)",
+      "category": "electronics",
+      "supply": "dc",
+      "kind": "electronic",
+      "powerW": 10,
+      "surgeW": 10,
+      "quantity": 2,
+      "hoursPerDay": 2,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "evening",
+      "provenance": "estimate",
+      "notes": "Generic estimate — replace with your device ratings.",
+      "id": "wa-app-5",
+      "enabled": true,
+      "libraryId": "generic-dc-usb"
+    },
+    {
+      "name": "12 V TV (generic)",
+      "category": "electronics",
+      "supply": "dc",
+      "kind": "electronic",
+      "powerW": 30,
+      "surgeW": 30,
+      "quantity": 1,
+      "hoursPerDay": 2,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 4,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "evening",
+      "provenance": "estimate",
+      "notes": "Generic estimate — replace with the rating on your TV.",
+      "id": "wa-app-6",
+      "enabled": true,
+      "libraryId": "generic-dc-tv"
+    }
+  ],
+  "battery": {
+    "module": {
+      "id": "victron-agm-12-110",
+      "manufacturer": "Victron Energy",
+      "model": "AGM Deep Cycle 12V/110Ah",
+      "chemistry": "agm",
+      "nominalVoltage": 12,
+      "capacityAh": 110,
+      "maxContinuousChargeA": 22,
+      "peakDischargeA": 880,
+      "weightKg": 32,
+      "cycleLife": [
+        {
+          "dodPct": 30,
+          "cycles": 1500
+        },
+        {
+          "dodPct": 50,
+          "cycles": 600
+        },
+        {
+          "dodPct": 80,
+          "cycles": 400
+        }
+      ],
+      "provenance": "manufacturer",
+      "source": {
+        "title": "GEL and AGM Batteries datasheet",
+        "url": "https://www.victronenergy.com/upload/documents/Datasheet-GEL-and-AGM-Batteries-EN.pdf",
+        "publisher": "Victron Energy",
+        "accessed": "2026-11-07",
+        "verification": "document",
+        "note": "Capacity at 20 h rate, 25 °C. Cycle life applies to the whole AGM / GEL range. Charge limit 0.2C; peak is the 5 s maximum discharge (AGM 8C, GEL 7C). No continuous discharge limit is published."
+      }
+    },
+    "series": 1,
+    "parallel": 2,
+    "dodPct": 50,
+    "autonomyTargetDays": 2
+  },
+  "solar": {
+    "enabled": true,
+    "panel": {
+      "id": "renogy-rng-175d-175w-12v-mono",
+      "manufacturer": "Renogy",
+      "model": "RNG-175D 175W 12V Mono (G2)",
+      "powerW": 175,
+      "vmpV": 18.1,
+      "impA": 9.67,
+      "vocV": 21.6,
+      "iscA": 10.31,
+      "tempCoeffPmaxPctPerC": -0.37,
+      "flexible": false,
+      "weightKg": 10,
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Renogy datasheet",
+        "url": "https://uk.renogy.com/cdn/shop/files/RNG-175D-G2_20Datasheet.pdf",
+        "accessed": "2026-11-07",
+        "verification": "document"
+      }
+    },
+    "quantity": 1,
+    "panelsInSeries": 1,
+    "locationId": "munich",
+    "mounting": "flat",
+    "shadingLossPct": 10,
+    "orientationLossPct": 0,
+    "temperatureLossPct": 8,
+    "soilingLossPct": 3,
+    "reflectionLossPct": 3,
+    "wiringLossPct": 3,
+    "controllerType": "pwm",
+    "controllerEfficiencyPct": 98
+  },
+  "inverter": {
+    "enabled": false,
+    "model": {
+      "id": "victron-inverter-smart-12-1600",
+      "manufacturer": "Victron Energy",
+      "model": "Inverter Smart 12/1600 230V",
+      "inputVoltage": 12,
+      "continuousW": 1300,
+      "continuousW40C": 1200,
+      "continuousVA": 1600,
+      "peakW": 3000,
+      "maxEfficiencyPct": 92,
+      "idleW": 8,
+      "waveform": "pure-sine",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Inverter Smart 1600VA–5000VA datasheet",
+        "url": "https://www.victronenergy.com/upload/documents/Datasheet-Inverter-Smart-1600VA-5000VA-EN-.pdf",
+        "publisher": "Victron Energy",
+        "accessed": "2026-11-07",
+        "verification": "document"
+      }
+    },
+    "averageEfficiencyPct": 87,
+    "onHoursPerDay": 4,
+    "sizingMarginPct": 25
+  },
+  "charging": {
+    "alternator": {
+      "enabled": true,
+      "method": "dcdc",
+      "dcdc": {
+        "id": "victron-orion-tr-smart-12-12-18-iso",
+        "manufacturer": "Victron Energy",
+        "model": "Orion-Tr Smart 12/12-18 isolated",
+        "outputCurrentA": 18,
+        "efficiencyPct": 87,
+        "inputVoltage": 12,
+        "outputVoltage": 12,
+        "provenance": "manufacturer",
+        "source": {
+          "title": "Orion-Tr Smart DC-DC Charger Isolated manual — Specifications",
+          "url": "https://www.victronenergy.com/media/pg/Orion-Tr_Smart_DC-DC_Charger_-_Isolated/en/specifications.html",
+          "publisher": "Victron Energy",
+          "accessed": "2026-11-07",
+          "verification": "document"
+        }
+      },
+      "dcdcCount": 1,
+      "vsrCurrentA": 40,
+      "drivingHoursPerDay": 2,
+      "drivingDaysPerWeek": 2,
+      "startHour": 10
+    },
+    "shore": {
+      "enabled": true,
+      "useInverterCharger": false,
+      "charger": {
+        "id": "victron-ip22-12-15",
+        "manufacturer": "Victron Energy",
+        "model": "Blue Smart IP22 Charger 12/15",
+        "outputCurrentA": 15,
+        "efficiencyPct": 93,
+        "outputVoltage": 12,
+        "provenance": "manufacturer",
+        "source": {
+          "title": "Blue Smart IP22 Charger 230VAC datasheet",
+          "url": "https://www.victronenergy.com/upload/documents/Datasheet-Blue-Smart-IP22-Charger-230-VAC-EN.pdf",
+          "publisher": "Victron Energy",
+          "accessed": "2026-11-07",
+          "verification": "document"
+        }
+      },
+      "hoursPerDay": 12,
+      "daysPerWeek": 1,
+      "startHour": 18
+    }
+  },
+  "cables": {
+    "runs": [
+      {
+        "id": "battery-main",
+        "role": "battery-main",
+        "name": "Battery → main fuse / busbar",
+        "lengthM": 0.5,
+        "maxDropPct": 1,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "battery-inverter",
+        "role": "battery-inverter",
+        "name": "Busbar → inverter",
+        "lengthM": 1.5,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "dc-distribution",
+        "role": "dc-distribution",
+        "name": "Busbar → DC fuse box",
+        "lengthM": 2,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "mppt-battery",
+        "role": "mppt-battery",
+        "name": "MPPT → busbar",
+        "lengthM": 1,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "pv-mppt",
+        "role": "pv-mppt",
+        "name": "Solar array → MPPT",
+        "lengthM": 5,
+        "maxDropPct": 3,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "dcdc-input",
+        "role": "dcdc-input",
+        "name": "Starter battery → DC-DC charger",
+        "lengthM": 5,
+        "maxDropPct": 5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "dcdc-output",
+        "role": "dcdc-output",
+        "name": "DC-DC charger → busbar",
+        "lengthM": 1,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "charger-battery",
+        "role": "charger-battery",
+        "name": "Shore charger → busbar",
+        "lengthM": 1,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      }
+    ],
+    "ambientC": 30,
+    "conductorTempC": 50,
+    "insulationRatingC": 90
+  },
+  "simulation": {
+    "month": 1,
+    "days": 7,
+    "startSocPct": 100
+  },
+  "diagram": {
+    "positions": {}
+  }
+}

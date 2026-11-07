@@ -1,0 +1,518 @@
+{
+  "schemaVersion": 1,
+  "id": "example-full-time",
+  "name": "Full-time off-grid — 12 V, 400 Ah LiFePO4",
+  "description": "Remote worker living in a van year-round in southern Europe: Starlink, laptop, fridge, roof fan, occasional induction cooking. 600 W solar and a 50 A DC-DC charger.",
+  "createdAt": "2026-11-07T00:00:00.000Z",
+  "updatedAt": "2026-11-07T00:00:00.000Z",
+  "systemVoltage": 12,
+  "appliances": [
+    {
+      "name": "Dometic CRX 65 fridge",
+      "category": "refrigeration",
+      "supply": "dc",
+      "kind": "compressor",
+      "powerW": 23.5,
+      "surgeW": 66,
+      "quantity": 1,
+      "hoursPerDay": 24,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "allday",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Dometic CoolMatic CRX 65 product page (5.5 A rated DC current)",
+        "url": "https://www.dometic.com/en/product/dometic-coolmatic-crx-65-9105306727",
+        "publisher": "Dometic",
+        "accessed": "2026-11-07",
+        "verification": "secondary",
+        "note": "The 5.5 A rating is confirmed. The 0.563 kWh/24 h (+32 °C ambient) energy figure came from a Dometic CRX 65T listing that is no longer online and could not be confirmed."
+      },
+      "notes": "Average power derived from the stated energy consumption; surge is the rated (maximum) DC current × 12 V. Real consumption depends strongly on ambient temperature, set-point and use.",
+      "id": "ft-app-1",
+      "enabled": true,
+      "libraryId": "dometic-crx-65"
+    },
+    {
+      "name": "Starlink Mini",
+      "category": "communications",
+      "supply": "dc",
+      "kind": "electronic",
+      "powerW": 40,
+      "surgeW": 60,
+      "quantity": 1,
+      "hoursPerDay": 10,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "daytime",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Starlink Mini specifications (25–40 W average; input rating 12–48 V, 60 W max)",
+        "url": "https://starlink.com/public-files/specification_sheet_mini_x.pdf",
+        "publisher": "Starlink",
+        "accessed": "2026-11-07",
+        "verification": "document"
+      },
+      "notes": "Uses the upper end of the published average range.",
+      "id": "ft-app-2",
+      "enabled": true,
+      "libraryId": "starlink-mini"
+    },
+    {
+      "name": "Laptop charging (Apple 96 W USB-C adapter)",
+      "category": "electronics",
+      "supply": "ac",
+      "kind": "electronic",
+      "powerW": 96,
+      "surgeW": 96,
+      "quantity": 1,
+      "hoursPerDay": 6,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 5,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "daytime",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Apple 96W USB-C Power Adapter user guide",
+        "url": "https://cdsassets.apple.com/live/6GJYWVAV/user/locale/en-gb/ma1993_usb-c-power-adapter-96w-ug.pdf",
+        "publisher": "Apple",
+        "accessed": "2026-11-07",
+        "verification": "document",
+        "note": "96 W is the rated maximum output; average charging power is usually lower."
+      },
+      "id": "ft-app-3",
+      "enabled": true,
+      "libraryId": "apple-96w-usbc"
+    },
+    {
+      "name": "Lumitec Orbit LED downlight",
+      "category": "lighting",
+      "supply": "dc",
+      "kind": "lighting",
+      "powerW": 4.32,
+      "surgeW": 4.32,
+      "quantity": 6,
+      "hoursPerDay": 4,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "evening",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Lumitec Orbit flush-mount LED down light (0.36 A at 12 V)",
+        "url": "https://www.lumiteclighting.com/orbit-flush-mount-led-down-light-8.html",
+        "publisher": "Lumitec",
+        "accessed": "2026-11-07",
+        "verification": "secondary",
+        "note": "Power = 0.36 A × 12 V. Manufacturer page blocks automated checks."
+      },
+      "id": "ft-app-4",
+      "enabled": true,
+      "libraryId": "lumitec-orbit"
+    },
+    {
+      "name": "Fiamma Turbo-Vent F roof fan (40×40)",
+      "category": "ventilation",
+      "supply": "dc",
+      "kind": "motor",
+      "powerW": 36,
+      "surgeW": 36,
+      "quantity": 1,
+      "hoursPerDay": 8,
+      "dutyCyclePct": 50,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "daytime",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Fiamma Kit Turbo-Vent F (36 W, 0.3–3.0 A)",
+        "url": "https://www.fiamma.it/en/product/kit-turbo-vent-f/",
+        "publisher": "Fiamma",
+        "accessed": "2026-11-07",
+        "verification": "secondary",
+        "note": "Manufacturer page blocks automated checks."
+      },
+      "notes": "36 W is the maximum speed. The 50 % duty cycle approximates mixed-speed use.",
+      "id": "ft-app-5",
+      "enabled": true,
+      "libraryId": "fiamma-turbo-vent-f"
+    },
+    {
+      "name": "Fiamma Aqua 8F 10L water pump",
+      "category": "water",
+      "supply": "dc",
+      "kind": "motor",
+      "powerW": 32.4,
+      "surgeW": 32.4,
+      "quantity": 1,
+      "hoursPerDay": 0.25,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "morning",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Fiamma Aqua 8F 10L (2.7 A)",
+        "url": "https://www.fiamma.it/en/product/aqua-8f-10l/",
+        "publisher": "Fiamma",
+        "accessed": "2026-11-07",
+        "verification": "secondary",
+        "note": "Manufacturer page blocks automated checks."
+      },
+      "id": "ft-app-6",
+      "enabled": true,
+      "libraryId": "fiamma-aqua-8f-10l"
+    },
+    {
+      "name": "Induction hob, single zone (Tefal IH210840)",
+      "category": "cooking",
+      "supply": "ac",
+      "kind": "induction",
+      "powerW": 2100,
+      "surgeW": 2100,
+      "quantity": 1,
+      "hoursPerDay": 0.4,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 4,
+      "standbyW": 0,
+      "concurrent": false,
+      "profile": "evening",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Tefal Everyday Slim Induction Hob IH210840 (300–2100 W)",
+        "url": "https://www.tefal.co.uk/Others/Tefal-Everyday-Slim-Induction-Hob-IH210840-Six-Cooking-modes--Black--2100W/p/7211003466",
+        "publisher": "Tefal",
+        "accessed": "2026-11-07",
+        "verification": "document"
+      },
+      "notes": "Assumes full power; cooking at lower settings uses less energy.",
+      "id": "ft-app-7",
+      "enabled": true,
+      "libraryId": "tefal-ih210840"
+    },
+    {
+      "name": "Travel kettle (Russell Hobbs 23840)",
+      "category": "cooking",
+      "supply": "ac",
+      "kind": "resistive",
+      "powerW": 1000,
+      "surgeW": 1000,
+      "quantity": 1,
+      "hoursPerDay": 0.15,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": false,
+      "profile": "morning",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Russell Hobbs Travel Kettle 23840 (1000 W)",
+        "url": "https://uk.russellhobbs.com/travel-kettle-23840",
+        "publisher": "Russell Hobbs",
+        "accessed": "2026-11-07",
+        "verification": "document"
+      },
+      "id": "ft-app-8",
+      "enabled": true,
+      "libraryId": "russell-hobbs-23840"
+    },
+    {
+      "name": "Phone charging (Apple 20 W USB-C adapter)",
+      "category": "electronics",
+      "supply": "ac",
+      "kind": "electronic",
+      "powerW": 20,
+      "surgeW": 20,
+      "quantity": 2,
+      "hoursPerDay": 2,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "evening",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Apple 20W USB-C Power Adapter user guide",
+        "url": "https://cdsassets.apple.com/live/6GJYWVAV/user/locale/en-gb/20W-usb-c-power-adapter-ug.pdf",
+        "publisher": "Apple",
+        "accessed": "2026-11-07",
+        "verification": "document",
+        "note": "20 W is the rated maximum output."
+      },
+      "id": "ft-app-9",
+      "enabled": true,
+      "libraryId": "apple-20w-usbc"
+    }
+  ],
+  "battery": {
+    "module": {
+      "id": "victron-lfp-ng-12-200",
+      "manufacturer": "Victron Energy",
+      "model": "Lithium NG 12,8V/200Ah",
+      "chemistry": "lifepo4",
+      "nominalVoltage": 12.8,
+      "capacityAh": 200,
+      "maxContinuousDischargeA": 200,
+      "maxContinuousChargeA": 200,
+      "peakDischargeA": 400,
+      "weightKg": 19,
+      "cycleLife": [
+        {
+          "dodPct": 50,
+          "cycles": 5000
+        },
+        {
+          "dodPct": 70,
+          "cycles": 3000
+        },
+        {
+          "dodPct": 80,
+          "cycles": 2500
+        }
+      ],
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Lithium NG 12,8 V battery manual — Technical data",
+        "url": "https://www.victronenergy.com/media/pg/Lithium_NG_battery_12,8_V/en/technical-data.html",
+        "publisher": "Victron Energy",
+        "accessed": "2026-11-07",
+        "verification": "document"
+      },
+      "notes": "Peak discharge is a 10 s rating."
+    },
+    "series": 1,
+    "parallel": 2,
+    "dodPct": 80,
+    "autonomyTargetDays": 2
+  },
+  "solar": {
+    "enabled": true,
+    "panel": {
+      "id": "renogy-rsp200d-200w-12v-mono",
+      "manufacturer": "Renogy",
+      "model": "RSP200D 200W 12V Mono (G3)",
+      "powerW": 200,
+      "vmpV": 19.2,
+      "impA": 10.42,
+      "vocV": 23,
+      "iscA": 11.05,
+      "tempCoeffPmaxPctPerC": -0.37,
+      "flexible": false,
+      "weightKg": 12,
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Renogy datasheet",
+        "url": "https://uk.renogy.com/cdn/shop/files/RSP200D-G3_Datasheet.pdf",
+        "accessed": "2026-11-07",
+        "verification": "document"
+      }
+    },
+    "quantity": 3,
+    "panelsInSeries": 3,
+    "locationId": "lisbon",
+    "mounting": "flat",
+    "shadingLossPct": 5,
+    "orientationLossPct": 0,
+    "temperatureLossPct": 8,
+    "soilingLossPct": 3,
+    "reflectionLossPct": 3,
+    "wiringLossPct": 3,
+    "controllerType": "mppt",
+    "controller": {
+      "id": "victron-smartsolar-100-50",
+      "manufacturer": "Victron Energy",
+      "model": "SmartSolar MPPT 100/50",
+      "maxPvVoltageV": 100,
+      "maxChargeCurrentA": 50,
+      "maxPvPowerW": {
+        "12": 700,
+        "24": 1400
+      },
+      "maxEfficiencyPct": 98,
+      "selfConsumptionMa": 30,
+      "provenance": "manufacturer",
+      "source": {
+        "title": "SmartSolar MPPT 100/30 & 100/50 datasheet",
+        "url": "https://www.victronenergy.com/upload/documents/Datasheet-SmartSolar-charge-controller-MPPT-100-30-&-100-50-EN.pdf",
+        "publisher": "Victron Energy",
+        "accessed": "2026-11-07",
+        "verification": "document"
+      }
+    },
+    "controllerEfficiencyPct": 98
+  },
+  "inverter": {
+    "enabled": true,
+    "model": {
+      "id": "victron-inverter-smart-12-3000",
+      "manufacturer": "Victron Energy",
+      "model": "Inverter Smart 12/3000 230V",
+      "inputVoltage": 12,
+      "continuousW": 2400,
+      "continuousW40C": 2200,
+      "continuousVA": 3000,
+      "peakW": 6000,
+      "maxEfficiencyPct": 93,
+      "idleW": 12,
+      "waveform": "pure-sine",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Inverter Smart 1600VA–5000VA datasheet",
+        "url": "https://www.victronenergy.com/upload/documents/Datasheet-Inverter-Smart-1600VA-5000VA-EN-.pdf",
+        "publisher": "Victron Energy",
+        "accessed": "2026-11-07",
+        "verification": "document"
+      }
+    },
+    "averageEfficiencyPct": 88,
+    "onHoursPerDay": 6,
+    "sizingMarginPct": 25
+  },
+  "charging": {
+    "alternator": {
+      "enabled": true,
+      "method": "dcdc",
+      "dcdc": {
+        "id": "victron-orion-xs-12-12-50",
+        "manufacturer": "Victron Energy",
+        "model": "Orion XS 12/12-50A",
+        "outputCurrentA": 50,
+        "efficiencyPct": 98.5,
+        "inputVoltage": 12,
+        "outputVoltage": 12,
+        "provenance": "manufacturer",
+        "source": {
+          "title": "Orion XS 12/12-50A manual — Technical data",
+          "url": "https://www.victronenergy.com/media/pg/Orion_XS_12-12-50A_DC-DC_battery_charger/en/technical-data.html",
+          "publisher": "Victron Energy",
+          "accessed": "2026-11-07",
+          "verification": "document",
+          "note": "98.5 % is the maximum efficiency."
+        }
+      },
+      "dcdcCount": 1,
+      "vsrCurrentA": 40,
+      "drivingHoursPerDay": 1.5,
+      "drivingDaysPerWeek": 2,
+      "startHour": 10
+    },
+    "shore": {
+      "enabled": false,
+      "useInverterCharger": false,
+      "charger": {
+        "id": "victron-ip22-12-30",
+        "manufacturer": "Victron Energy",
+        "model": "Blue Smart IP22 Charger 12/30",
+        "outputCurrentA": 30,
+        "efficiencyPct": 93,
+        "outputVoltage": 12,
+        "provenance": "manufacturer",
+        "source": {
+          "title": "Blue Smart IP22 Charger 230VAC datasheet",
+          "url": "https://www.victronenergy.com/upload/documents/Datasheet-Blue-Smart-IP22-Charger-230-VAC-EN.pdf",
+          "publisher": "Victron Energy",
+          "accessed": "2026-11-07",
+          "verification": "document"
+        }
+      },
+      "hoursPerDay": 10,
+      "daysPerWeek": 1,
+      "startHour": 18
+    }
+  },
+  "cables": {
+    "runs": [
+      {
+        "id": "battery-main",
+        "role": "battery-main",
+        "name": "Battery → main fuse / busbar",
+        "lengthM": 0.5,
+        "maxDropPct": 1,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "battery-inverter",
+        "role": "battery-inverter",
+        "name": "Busbar → inverter",
+        "lengthM": 1.5,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "dc-distribution",
+        "role": "dc-distribution",
+        "name": "Busbar → DC fuse box",
+        "lengthM": 2,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "mppt-battery",
+        "role": "mppt-battery",
+        "name": "MPPT → busbar",
+        "lengthM": 1,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "pv-mppt",
+        "role": "pv-mppt",
+        "name": "Solar array → MPPT",
+        "lengthM": 5,
+        "maxDropPct": 3,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "dcdc-input",
+        "role": "dcdc-input",
+        "name": "Starter battery → DC-DC charger",
+        "lengthM": 5,
+        "maxDropPct": 5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "dcdc-output",
+        "role": "dcdc-output",
+        "name": "DC-DC charger → busbar",
+        "lengthM": 1,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "charger-battery",
+        "role": "charger-battery",
+        "name": "Shore charger → busbar",
+        "lengthM": 1,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      }
+    ],
+    "ambientC": 30,
+    "conductorTempC": 50,
+    "insulationRatingC": 90
+  },
+  "simulation": {
+    "month": 12,
+    "days": 7,
+    "startSocPct": 100
+  },
+  "diagram": {
+    "positions": {}
+  }
+}

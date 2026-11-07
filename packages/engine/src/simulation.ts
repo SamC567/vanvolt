@@ -115,6 +115,10 @@ export interface SimulationStep {
   alternatorW: number;
   shoreW: number;
   loadW: number;
+  /** Load supplied through the inverter, incl. conversion loss and idle (W, DC side). */
+  acLoadW: number;
+  /** Direct DC load (W). */
+  dcLoadW: number;
   /** Positive = charging, negative = discharging (W at battery). */
   batteryW: number;
   unmetWh: number;
@@ -187,10 +191,14 @@ export function simulate(input: SimulationInputs): SimulationResult {
 
   for (let d = 0; d < days; d++) {
     for (let h = 0; h < 24; h++) {
-      let loadW = idleW;
+      let acLoadW = idleW;
+      let dcLoadW = 0;
       for (const lp of loadProfiles) {
-        loadW += activeDay(d, lp.a.daysPerWeek) ? lp.useDay[h]! : lp.offDay[h]!;
+        const w = activeDay(d, lp.a.daysPerWeek) ? lp.useDay[h]! : lp.offDay[h]!;
+        if (lp.a.supply === 'ac') acLoadW += w;
+        else dcLoadW += w;
       }
+      const loadW = acLoadW + dcLoadW;
       const solarW = safe(input.solarWhPerDay) * (solarProfile[h] ?? 0);
       const altW =
         input.alternator.enabled && activeDay(d, input.alternator.daysPerWeek)
@@ -240,6 +248,8 @@ export function simulate(input: SimulationInputs): SimulationResult {
         alternatorW: altW,
         shoreW,
         loadW,
+        acLoadW,
+        dcLoadW,
         batteryW,
         unmetWh: unmet,
         curtailedWh: curtailed,
