@@ -60,6 +60,7 @@ Then open http://localhost:5173 in your browser.
 ## Documentation
 
 - [Architecture and implementation plan](docs/ARCHITECTURE.md)
+- [Calculation reference](docs/CALCULATIONS.md)
 
 ## Data and sources
 
