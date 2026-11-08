@@ -1,0 +1,459 @@
+{
+  "schemaVersion": 1,
+  "id": "example-transit-jumbo",
+  "name": "Ford Transit Jumbo L4H3 — full-time off-grid (12 V, 400 Ah LiFePO4)",
+  "description": "2017 Ford Transit Jumbo LWB (L4H3, RWD, 2.0 EcoBlue 130PS) for full-time living and six-month-plus tours from Ireland to warmer European countries. Wet room with shower and toilet, side kitchen with diesel cooking, Dellonda 60 L dual-zone fridge, bike storage. Heating by a Tiger Exped 1.8 kW \"Sibirien\" diesel stove, which is gravity-fed and needs no electricity (its optional 12 V fuel pump is not modelled: no published power figure). The Euro 6 EcoBlue has a smart alternator, so alternator charging is via a DC-DC charger. Location set to Dublin with a December simulation, the hardest case; switch to Lisbon or Seville on the Solar page for touring months.",
+  "createdAt": "2026-11-07T00:00:00.000Z",
+  "updatedAt": "2026-11-07T00:00:00.000Z",
+  "systemVoltage": 12,
+  "appliances": [
+    {
+      "name": "Dellonda DL15 60 L dual-zone fridge/freezer",
+      "category": "refrigeration",
+      "supply": "dc",
+      "kind": "compressor",
+      "powerW": 60,
+      "surgeW": 60,
+      "quantity": 1,
+      "hoursPerDay": 24,
+      "dutyCyclePct": 30,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "allday",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Dellonda DL13/DL14/DL15 instructions (DL15 60 L: power rating 60 W, 12/24 V)",
+        "url": "https://sealey.ardsoftware.com/PDFs/Instructions/DL13.v2%20DL14.v2%20DL15.v2%20Instructions%2020230405%20(1)_DFC1974176.pdf",
+        "publisher": "Dellonda (Sealey)",
+        "accessed": "2026-11-07",
+        "verification": "document",
+        "note": "Dellonda also quotes 0.25 kWh/24 h for the 60 L model without test conditions (https://www.dellonda.co.uk/products/60l-car-fridge-freezer-with-230v-adaptor)."
+      },
+      "notes": "Power rating from the manual. The 30 % compressor duty cycle is a VanVolt assumption (about 430 Wh/day), deliberately above Dellonda’s unqualified 0.25 kWh/24 h claim to allow for warm climates and two zones.",
+      "id": "tj-app-1",
+      "enabled": true,
+      "libraryId": "dellonda-dl15"
+    },
+    {
+      "name": "Diesel hob/heater 1.8 kW (Belief single hob)",
+      "category": "cooking",
+      "supply": "dc",
+      "kind": "motor",
+      "powerW": 10.2,
+      "surgeW": 120,
+      "quantity": 1,
+      "hoursPerDay": 1.5,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "evening",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Belief Diesel Stove Heater 1.8 kW single hob (12 V: average 0.55–0.85 A, short-term max 8–10 A)",
+        "url": "https://www.beliefparkingheater.com/product-detail/belief-diesel-stove-heater-1-8kw/",
+        "publisher": "Belief",
+        "accessed": "2026-11-07",
+        "verification": "document",
+        "note": "Power = 0.85 A × 12 V (upper average); surge = 10 A × 12 V during glow-plug start."
+      },
+      "notes": "A representative electric-start diesel hob. Replace with the model you fit.",
+      "id": "tj-app-2",
+      "enabled": true,
+      "libraryId": "belief-diesel-stove-1-8"
+    },
+    {
+      "name": "Lumitec Orbit LED downlight",
+      "category": "lighting",
+      "supply": "dc",
+      "kind": "lighting",
+      "powerW": 4.32,
+      "surgeW": 4.32,
+      "quantity": 8,
+      "hoursPerDay": 5,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "evening",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Lumitec Orbit flush-mount LED down light (0.36 A at 12 V)",
+        "url": "https://www.lumiteclighting.com/orbit-flush-mount-led-down-light-8.html",
+        "publisher": "Lumitec",
+        "accessed": "2026-11-07",
+        "verification": "secondary",
+        "note": "Power = 0.36 A × 12 V. Manufacturer page blocks automated checks."
+      },
+      "id": "tj-app-3",
+      "enabled": true,
+      "libraryId": "lumitec-orbit"
+    },
+    {
+      "name": "Shurflo Trail King 7 water pump",
+      "category": "water",
+      "supply": "dc",
+      "kind": "motor",
+      "powerW": 39.6,
+      "surgeW": 39.6,
+      "quantity": 1,
+      "hoursPerDay": 0.4,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "morning",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Shurflo 2095-204 data sheet (1.5 A at 0 psi to 3.3 A at 20 psi; 10 A fuse)",
+        "url": "https://shurflo.eu/wp-content/uploads/2023/03/shurflo2095_204_412.pdf",
+        "publisher": "Shurflo (Pentair)",
+        "accessed": "2026-11-07",
+        "verification": "document",
+        "note": "Datasheet recommends a 10 A time-delay fuse."
+      },
+      "id": "tj-app-4",
+      "enabled": true,
+      "libraryId": "shurflo-trail-king-7"
+    },
+    {
+      "name": "Fiamma Turbo-Vent F roof fan (40×40)",
+      "category": "ventilation",
+      "supply": "dc",
+      "kind": "motor",
+      "powerW": 36,
+      "surgeW": 36,
+      "quantity": 1,
+      "hoursPerDay": 8,
+      "dutyCyclePct": 50,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "daytime",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Fiamma Kit Turbo-Vent F (36 W, 0.3–3.0 A)",
+        "url": "https://www.fiamma.it/en/product/kit-turbo-vent-f/",
+        "publisher": "Fiamma",
+        "accessed": "2026-11-07",
+        "verification": "secondary",
+        "note": "Manufacturer page blocks automated checks."
+      },
+      "notes": "36 W is the maximum speed. The 50 % duty cycle approximates mixed-speed use.",
+      "id": "tj-app-5",
+      "enabled": true,
+      "libraryId": "fiamma-turbo-vent-f"
+    },
+    {
+      "name": "USB device charging (generic 12 V)",
+      "category": "electronics",
+      "supply": "dc",
+      "kind": "electronic",
+      "powerW": 10,
+      "surgeW": 10,
+      "quantity": 3,
+      "hoursPerDay": 2,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 7,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "evening",
+      "provenance": "estimate",
+      "notes": "Generic estimate — replace with your device ratings.",
+      "id": "tj-app-6",
+      "enabled": true,
+      "libraryId": "generic-dc-usb"
+    },
+    {
+      "name": "Laptop charging (Apple 96 W USB-C adapter)",
+      "category": "electronics",
+      "supply": "ac",
+      "kind": "electronic",
+      "powerW": 96,
+      "surgeW": 96,
+      "quantity": 1,
+      "hoursPerDay": 3,
+      "dutyCyclePct": 100,
+      "daysPerWeek": 5,
+      "standbyW": 0,
+      "concurrent": true,
+      "profile": "daytime",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Apple 96W USB-C Power Adapter user guide",
+        "url": "https://cdsassets.apple.com/live/6GJYWVAV/user/locale/en-gb/ma1993_usb-c-power-adapter-96w-ug.pdf",
+        "publisher": "Apple",
+        "accessed": "2026-11-07",
+        "verification": "document",
+        "note": "96 W is the rated maximum output; average charging power is usually lower."
+      },
+      "id": "tj-app-7",
+      "enabled": true,
+      "libraryId": "apple-96w-usbc"
+    }
+  ],
+  "battery": {
+    "module": {
+      "id": "victron-lfp-ng-12-200",
+      "manufacturer": "Victron Energy",
+      "model": "Lithium NG 12,8V/200Ah",
+      "chemistry": "lifepo4",
+      "nominalVoltage": 12.8,
+      "capacityAh": 200,
+      "maxContinuousDischargeA": 200,
+      "maxContinuousChargeA": 200,
+      "peakDischargeA": 400,
+      "weightKg": 19,
+      "cycleLife": [
+        {
+          "dodPct": 50,
+          "cycles": 5000
+        },
+        {
+          "dodPct": 70,
+          "cycles": 3000
+        },
+        {
+          "dodPct": 80,
+          "cycles": 2500
+        }
+      ],
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Lithium NG 12,8 V battery manual — Technical data",
+        "url": "https://www.victronenergy.com/media/pg/Lithium_NG_battery_12,8_V/en/technical-data.html",
+        "publisher": "Victron Energy",
+        "accessed": "2026-11-07",
+        "verification": "document"
+      },
+      "notes": "Peak discharge is a 10 s rating."
+    },
+    "series": 1,
+    "parallel": 2,
+    "dodPct": 80,
+    "autonomyTargetDays": 3
+  },
+  "solar": {
+    "enabled": true,
+    "panel": {
+      "id": "renogy-rsp200d-200w-12v-mono",
+      "manufacturer": "Renogy",
+      "model": "RSP200D 200W 12V Mono (G3)",
+      "powerW": 200,
+      "vmpV": 19.2,
+      "impA": 10.42,
+      "vocV": 23,
+      "iscA": 11.05,
+      "tempCoeffPmaxPctPerC": -0.37,
+      "flexible": false,
+      "weightKg": 12,
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Renogy datasheet",
+        "url": "https://uk.renogy.com/cdn/shop/files/RSP200D-G3_Datasheet.pdf",
+        "accessed": "2026-11-07",
+        "verification": "document"
+      }
+    },
+    "quantity": 3,
+    "panelsInSeries": 3,
+    "locationId": "dublin",
+    "mounting": "flat",
+    "shadingLossPct": 5,
+    "orientationLossPct": 0,
+    "temperatureLossPct": 8,
+    "soilingLossPct": 3,
+    "reflectionLossPct": 3,
+    "wiringLossPct": 3,
+    "controllerType": "mppt",
+    "controller": {
+      "id": "victron-smartsolar-100-50",
+      "manufacturer": "Victron Energy",
+      "model": "SmartSolar MPPT 100/50",
+      "maxPvVoltageV": 100,
+      "maxChargeCurrentA": 50,
+      "maxPvPowerW": {
+        "12": 700,
+        "24": 1400
+      },
+      "maxEfficiencyPct": 98,
+      "selfConsumptionMa": 30,
+      "provenance": "manufacturer",
+      "source": {
+        "title": "SmartSolar MPPT 100/30 & 100/50 datasheet",
+        "url": "https://www.victronenergy.com/upload/documents/Datasheet-SmartSolar-charge-controller-MPPT-100-30-&-100-50-EN.pdf",
+        "publisher": "Victron Energy",
+        "accessed": "2026-11-07",
+        "verification": "document"
+      }
+    },
+    "controllerEfficiencyPct": 98
+  },
+  "inverter": {
+    "enabled": true,
+    "model": {
+      "id": "victron-phoenix-12-800",
+      "manufacturer": "Victron Energy",
+      "model": "Phoenix Inverter 12/800 230V VE.Direct",
+      "inputVoltage": 12,
+      "continuousW": 800,
+      "continuousW40C": 650,
+      "peakW": 1200,
+      "maxEfficiencyPct": 90,
+      "idleW": 8,
+      "waveform": "pure-sine",
+      "provenance": "manufacturer",
+      "source": {
+        "title": "Inverter VE.Direct 230V manual (HW15)",
+        "url": "https://www.victronenergy.com/upload/documents/Inverter_VE.Direct_230V_-_HW15/106668-Inverter_VE_Direct__Smart_and_SUN-pdf-en.pdf",
+        "publisher": "Victron Energy",
+        "accessed": "2026-11-07",
+        "verification": "document",
+        "note": "Peak power is a 15 s rating."
+      }
+    },
+    "averageEfficiencyPct": 85,
+    "onHoursPerDay": 4,
+    "sizingMarginPct": 25
+  },
+  "charging": {
+    "alternator": {
+      "enabled": true,
+      "method": "dcdc",
+      "dcdc": {
+        "id": "victron-orion-xs-12-12-50",
+        "manufacturer": "Victron Energy",
+        "model": "Orion XS 12/12-50A",
+        "outputCurrentA": 50,
+        "efficiencyPct": 98.5,
+        "inputVoltage": 12,
+        "outputVoltage": 12,
+        "provenance": "manufacturer",
+        "source": {
+          "title": "Orion XS 12/12-50A manual — Technical data",
+          "url": "https://www.victronenergy.com/media/pg/Orion_XS_12-12-50A_DC-DC_battery_charger/en/technical-data.html",
+          "publisher": "Victron Energy",
+          "accessed": "2026-11-07",
+          "verification": "document",
+          "note": "98.5 % is the maximum efficiency."
+        }
+      },
+      "dcdcCount": 1,
+      "vsrCurrentA": 40,
+      "drivingHoursPerDay": 2,
+      "drivingDaysPerWeek": 3,
+      "startHour": 10
+    },
+    "shore": {
+      "enabled": true,
+      "useInverterCharger": false,
+      "charger": {
+        "id": "victron-ip22-12-30",
+        "manufacturer": "Victron Energy",
+        "model": "Blue Smart IP22 Charger 12/30",
+        "outputCurrentA": 30,
+        "efficiencyPct": 93,
+        "outputVoltage": 12,
+        "provenance": "manufacturer",
+        "source": {
+          "title": "Blue Smart IP22 Charger 230VAC datasheet",
+          "url": "https://www.victronenergy.com/upload/documents/Datasheet-Blue-Smart-IP22-Charger-230-VAC-EN.pdf",
+          "publisher": "Victron Energy",
+          "accessed": "2026-11-07",
+          "verification": "document"
+        }
+      },
+      "hoursPerDay": 12,
+      "daysPerWeek": 1,
+      "startHour": 18
+    }
+  },
+  "cables": {
+    "runs": [
+      {
+        "id": "battery-main",
+        "role": "battery-main",
+        "name": "Battery → main fuse / busbar",
+        "lengthM": 0.5,
+        "maxDropPct": 1,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "battery-inverter",
+        "role": "battery-inverter",
+        "name": "Busbar → inverter",
+        "lengthM": 1.5,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "dc-distribution",
+        "role": "dc-distribution",
+        "name": "Busbar → DC fuse box",
+        "lengthM": 2,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "mppt-battery",
+        "role": "mppt-battery",
+        "name": "MPPT → busbar",
+        "lengthM": 1,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "pv-mppt",
+        "role": "pv-mppt",
+        "name": "Solar array → MPPT",
+        "lengthM": 6,
+        "maxDropPct": 3,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "dcdc-input",
+        "role": "dcdc-input",
+        "name": "Starter battery → DC-DC charger",
+        "lengthM": 6,
+        "maxDropPct": 5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "dcdc-output",
+        "role": "dcdc-output",
+        "name": "DC-DC charger → busbar",
+        "lengthM": 1,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      },
+      {
+        "id": "charger-battery",
+        "role": "charger-battery",
+        "name": "Shore charger → busbar",
+        "lengthM": 1,
+        "maxDropPct": 2.5,
+        "installation": "free-air",
+        "bundledCount": 1
+      }
+    ],
+    "ambientC": 30,
+    "conductorTempC": 50,
+    "insulationRatingC": 90
+  },
+  "simulation": {
+    "month": 12,
+    "days": 7,
+    "startSocPct": 100
+  },
+  "diagram": {
+    "positions": {}
+  }
+}

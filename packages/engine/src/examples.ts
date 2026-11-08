@@ -207,9 +207,69 @@ export function electricMotorhome48(): Design {
   return d;
 }
 
+export function fordTransitJumbo(): Design {
+  const d = base(
+    'example-transit-jumbo',
+    'Ford Transit Jumbo L4H3 — full-time off-grid (12 V, 400 Ah LiFePO4)',
+    '2017 Ford Transit Jumbo LWB (L4H3, RWD, 2.0 EcoBlue 130PS) for full-time living and six-month-plus tours from Ireland to warmer European countries. Wet room with shower and toilet, side kitchen with diesel cooking, Dellonda 60 L dual-zone fridge, bike storage. Heating by a Tiger Exped 1.8 kW "Sibirien" diesel stove, which is gravity-fed and needs no electricity (its optional 12 V fuel pump is not modelled: no published power figure). The Euro 6 EcoBlue has a smart alternator, so alternator charging is via a DC-DC charger. Location set to Dublin with a December simulation, the hardest case; switch to Lisbon or Seville on the Solar page for touring months.',
+  );
+  d.battery = {
+    module: lib(BATTERY_MODULES, 'victron-lfp-ng-12-200'),
+    series: 1,
+    parallel: 2,
+    dodPct: 80,
+    autonomyTargetDays: 3,
+  };
+  d.solar = {
+    ...d.solar,
+    panel: lib(SOLAR_PANELS, 'renogy-rsp200d-200w-12v-mono'),
+    quantity: 3,
+    panelsInSeries: 3,
+    locationId: 'dublin',
+    controller: lib(MPPT_CONTROLLERS, 'victron-smartsolar-100-50'),
+    shadingLossPct: 5,
+  };
+  const inv = lib(INVERTER_MODELS, 'victron-phoenix-12-800');
+  d.inverter = {
+    enabled: true,
+    model: inv,
+    averageEfficiencyPct: inv.maxEfficiencyPct - 5,
+    onHoursPerDay: 4,
+    sizingMarginPct: 25,
+  };
+  d.charging.alternator = {
+    ...d.charging.alternator,
+    dcdc: lib(DCDC_CHARGERS, 'victron-orion-xs-12-12-50'),
+    drivingHoursPerDay: 2,
+    drivingDaysPerWeek: 3,
+  };
+  d.charging.shore = {
+    ...d.charging.shore,
+    enabled: true,
+    charger: lib(AC_CHARGERS, 'victron-ip22-12-30'),
+    hoursPerDay: 12,
+    daysPerWeek: 1,
+  };
+  d.appliances = apps('tj', [
+    ['dellonda-dl15'],
+    ['belief-diesel-stove-1-8'],
+    ['lumitec-orbit', { quantity: 8, hoursPerDay: 5 }],
+    ['shurflo-trail-king-7', { hoursPerDay: 0.4 }],
+    ['fiamma-turbo-vent-f', { hoursPerDay: 8 }],
+    ['generic-dc-usb', { quantity: 3 }],
+    ['apple-96w-usbc', { hoursPerDay: 3, daysPerWeek: 5 }],
+  ]);
+  d.simulation = { month: 12, days: 7, startSocPct: 100 };
+  d.cables.runs = d.cables.runs.map((r) =>
+    r.role === 'dcdc-input' || r.role === 'pv-mppt' ? { ...r, lengthM: 6 } : r,
+  );
+  return d;
+}
+
 export const EXAMPLE_DESIGNS: { id: string; build: () => Design }[] = [
   { id: 'example-weekend-van', build: weekendVan },
   { id: 'example-full-time', build: fullTimeOffGrid },
   { id: 'example-winter-agm', build: winterAgmVan },
   { id: 'example-48v-motorhome', build: electricMotorhome48 },
+  { id: 'example-transit-jumbo', build: fordTransitJumbo },
 ];
